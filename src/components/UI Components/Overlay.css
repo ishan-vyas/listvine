@@ -1,0 +1,23 @@
+.overlay{
+    position: absolute;
+    width: 50%;
+    height: 100vh;
+    overflow: hidden;  
+}
+  
+img{
+    position: absolute;
+    transform: scale(0.5);
+    top: -9999px;
+    left: -9999px;
+    right: -9999px;
+    bottom: -9999px;
+    margin: auto;
+}
+
+.color-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background: rgba(3, 84, 206, 0.12);
+}

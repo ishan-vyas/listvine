@@ -1,0 +1,11 @@
+.main-newsfeed-div{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: #EDEFF2;
+}
+
+.newsfeed-div{
+    margin-top: 5%;
+    width: 20%;
+}

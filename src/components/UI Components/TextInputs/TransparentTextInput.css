@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+
+.transparent-input{
+    background: white;
+    border-radius: 0;
+    outline: none;
+    border-bottom: 5px solid #EDEFF2;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 90%;
+    height: 3vh;
+    margin-bottom: 5%;
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    transition: ease 0.3s;
+}
+
+.transparent-input:focus{
+    border-color: #8C8C8C;
+    transition: ease 0.3s;
+}
+
+.transparent-input:hover{
+    border-color: #8C8C8C;
+    transition: ease 0.3s;
+}

@@ -1,0 +1,27 @@
+.actionbar-div{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.actionbar-div > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seperator{
+    background-color: #EDEFF2;
+    width: 90%;
+    height: 3px;
+    border-radius: 10px;
+}
+
+p {
+    text-justify: inter-character;
+    text-align-last: justify;
+}
+
