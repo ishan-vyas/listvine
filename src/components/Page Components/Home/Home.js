@@ -8,7 +8,8 @@ function Home(){
         <div className="main-home-div">
             <Navbar>Ishan Vyas</Navbar>
             <div className="home-div">
-                <ActionBar style={{width:'100%', height: '50vh'}} />
+                <div className="info-div"></div>
+                <ActionBar style={{width:'15%', height: '50vh'}} />
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import './ActionBar.css';
 import { Link } from "react-router-dom";
-import { HomeOutlined, ListAltOutlined, CreateOutlined, CardGiftcardOutlined, ExitToAppOutlined } from '@material-ui/icons';
+import { HomeOutlined, ListAltOutlined, CreateOutlined, CardGiftcardOutlined, SettingsOutlined, ExitToAppOutlined } from '@material-ui/icons';
 
 function ActionBar(props){
     return(
@@ -39,6 +39,15 @@ function ActionBar(props){
                 </Link>
                 <Link to="/invitations">
                     <p>Invitations</p>
+                </Link>
+            </div>
+            <div className="seperator"></div>
+            <div className="invitations-action">
+                <Link to="/settings">
+                    <SettingsOutlined fontSize="large"/>
+                </Link>
+                <Link to="/settings">
+                    <p>Settings</p>
                 </Link>
             </div>
             <div className="seperator"></div>

@@ -8,7 +8,9 @@ function Newsfeed(){
         <div className="main-newsfeed-div">
             <Navbar>Ishan Vyas</Navbar>
             <div className="newsfeed-div">
-                <ActionBar />
+                <div className="quicklist-div"></div>
+                <div className="livelist-div"></div>
+                <ActionBar style={{width:'15%', height: '50vh'}} />
             </div>
         </div>
     );

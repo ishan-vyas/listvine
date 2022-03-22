@@ -6,6 +6,29 @@
 }
 
 .newsfeed-div{
-    margin-top: 5%;
+    display: flex;
+    margin-top: 4%;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.quicklist-div{
     width: 20%;
+    height: 90vh;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.livelist-div{
+    width: 60%;
+    height: 90vh;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

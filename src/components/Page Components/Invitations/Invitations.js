@@ -8,7 +8,9 @@ function Invitations(){
         <div className="main-invitations-div">
             <Navbar>Ishan Vyas</Navbar>
             <div className="invitations-div">
-                <ActionBar />
+                <div className="friend-div">
+                </div>
+                <ActionBar style={{width:'15%', height: '50vh'}} />
             </div>
         </div>
     );

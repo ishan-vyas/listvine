@@ -8,7 +8,9 @@ function Settings(){
         <div className="main-settings-div">
             <Navbar>Ishan Vyas</Navbar>
             <div className="settings-div">
-                <ActionBar />
+                <div className="general-div">
+                </div>
+                <ActionBar style={{width:'15%', height:'50vh'}}/>
             </div>
         </div>
     );
