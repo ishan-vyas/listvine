@@ -3,8 +3,6 @@ import './Home.css';
 import Navbar from "../../UI Components/Navbar/Navbar";
 import ActionBar from "../../UI Components/ActionBar/ActionBar";
 
-import socketIOClient from "socket.io-client";
-
 function Home(){
     return(
         <div className="main-home-div">
