@@ -6,6 +6,22 @@ import Button from "../../UI Components/Button";
 import TransparentTextInput from "../../UI Components/TextInputs/TransparentTextInput";
 
 function NewList(){
+
+    const submitNewList = (e) => {
+        e.preventDefault();
+        console.log('hello');
+    }
+
+    const setTitle = (e) => {
+
+    }
+
+    const addItem = (e) => {
+
+    }
+
+    const addMember = (e) => {}
+
     return(
         <div className="main-newlist-div">
             <Navbar>Ishan Vyas</Navbar>
@@ -13,6 +29,7 @@ function NewList(){
                 <div className="create-div">
                     <div className="header-section">
                         <h1 id="newlist-title">Create New List</h1>
+
                     </div>
                     <div className="list-section">
                         <TransparentTextInput defaultValue="Add Title ..."/>
