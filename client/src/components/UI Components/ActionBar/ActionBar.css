@@ -20,7 +20,7 @@
     border-radius: 10px;
 }
 
-p {
+.actionbar-p {
     text-justify: inter-character;
     text-align-last: justify;
 }

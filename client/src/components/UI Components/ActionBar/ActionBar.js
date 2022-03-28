@@ -11,7 +11,7 @@ function ActionBar(props){
                     <HomeOutlined fontSize="large"/>
                 </Link>
                 <Link to="/home">
-                    <p>Home</p>
+                    <p className="actionbar-p">Home</p>
                 </Link>
             </div>
             <div className="seperator"></div>
@@ -20,7 +20,7 @@ function ActionBar(props){
                     <ListAltOutlined fontSize="large"/>
                 </Link>
                 <Link to="/newsfeed">
-                    <p>Newsfeed</p>
+                    <p className="actionbar-p">Newsfeed</p>
                 </Link>
             </div>
             <div className="seperator"></div>
@@ -29,7 +29,7 @@ function ActionBar(props){
                     <CreateOutlined fontSize="large"/>
                 </Link>
                 <Link to="/newlist">
-                    <p>New List</p>
+                    <p className="actionbar-p">New List</p>
                 </Link>
             </div>
             <div className="seperator"></div>
@@ -38,7 +38,7 @@ function ActionBar(props){
                     <CardGiftcardOutlined fontSize="large"/>
                 </Link>
                 <Link to="/invitations">
-                    <p>Invitations</p>
+                    <p className="actionbar-p">Invitations</p>
                 </Link>
             </div>
             <div className="seperator"></div>
@@ -47,7 +47,7 @@ function ActionBar(props){
                     <SettingsOutlined fontSize="large"/>
                 </Link>
                 <Link to="/settings">
-                    <p>Settings</p>
+                    <p className="actionbar-p">Settings</p>
                 </Link>
             </div>
             <div className="seperator"></div>
@@ -56,7 +56,7 @@ function ActionBar(props){
                     <ExitToAppOutlined fontSize="large"/>
                 </Link>
                 <Link to="/login">
-                    <p>Log Out</p>
+                    <p className="actionbar-p">Log Out</p>
                 </Link>
             </div>
         </div>
