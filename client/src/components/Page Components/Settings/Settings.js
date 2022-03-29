@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from './Modal'
 import './Settings.css';
 import Navbar from "../../UI Components/Navbar/Navbar";
-import Delete from "../../UI Components/Delete";
+import DeleteButton from "../../UI Components/DeleteButton";
 import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import { Edit } from '@material-ui/icons';
 
 
 function Settings(){
+    const [isOpen, setIsOpen] = useState(false)
     return(
+        
         <div className="main-settings-div">
             <Navbar>Ishan Vyas</Navbar>
             <div className="settings-div">
@@ -40,7 +43,17 @@ function Settings(){
                     </div>
                     <div className="setting-seperator"></div>
                     <div className="delete-section">
-                        <Delete>Delete Account</Delete>
+                        <div className="modal-bg">
+                            <div className="modal">
+                                <h2>Are you sure you want to delete this account?</h2>
+                                <label for="note">deleting this account will lead to permanent oss of data</label>
+                            </div>
+                        </div>
+                        <deletebutton onClick={() => setIsOpen(true)}>Delete Account</deletebutton>
+                        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+                            Test
+                        </Modal>
+
                     </div>
                 </div>
                 <ActionBar style={{width:'15%', height:'50vh'}}/>
