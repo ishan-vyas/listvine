@@ -6,7 +6,7 @@ const TextInput = (props) => {
         <div>
             <label>{props.children}</label>
             <br />
-            <input type={props.type}></input>
+            <input style={props.style} type={props.type}></input>
         </div>
     );
 }
