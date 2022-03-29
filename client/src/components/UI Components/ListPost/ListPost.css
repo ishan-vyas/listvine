@@ -61,6 +61,16 @@
     margin-bottom: 2%;
 }
 
+.add-comment > h3{
+    padding: 0;
+    margin: 0;
+}
+
+.comment-input{
+    display: flex;
+    align-items: center;
+}
+
 /* 
     User Tag Component Styling
 */
@@ -125,6 +135,34 @@
 }
 
 /*
+    CommentItem Styling
+*/
+.comment-container{
+    margin: 1%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.comment-content{
+    background-color: #EDEFF2;
+    border-radius: 20px;
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    max-width: 50%;
+}
+
+.comment-content > h3{
+    padding: 0;
+    margin: 0;
+}
+
+.comment-content > p{
+    padding: 0;
+    margin: 0;
+}
+
+/*
     Scrollbar
 */
 /* width */
@@ -141,7 +179,7 @@
   /* Handle */
   ::-webkit-scrollbar-thumb {
     border-radius: 20px;
-    background: #cecece;
+    background: #cecece00;
   }
   
   /* Handle on hover */
