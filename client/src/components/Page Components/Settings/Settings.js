@@ -5,6 +5,7 @@ import Navbar from "../../UI Components/Navbar/Navbar";
 import DeleteButton from "../../UI Components/DeleteButton";
 import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import { Edit } from '@material-ui/icons';
+import Confirm from "../../UI Components/Modals/Confirm";
 
 
 function Settings(){
@@ -13,6 +14,9 @@ function Settings(){
         
         <div className="main-settings-div">
             <Navbar>Ishan Vyas</Navbar>
+            {isOpen && (<Confirm confirmHandler={() => {setIsOpen(false)}} cancelHandler={() => {setIsOpen(false)}} title="Are you sure you want to delete this account?">
+                        You are about to delete an entire account, you will no longer be able to access listvine anymore.
+                        </Confirm>)}
             <div className="settings-div">
                 <div className="general-div">
                     <div className="header-section">
@@ -50,10 +54,6 @@ function Settings(){
                             </div>
                         </div>
                         <deletebutton onClick={() => setIsOpen(true)}>Delete Account</deletebutton>
-                        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-                            Test
-                        </Modal>
-
                     </div>
                 </div>
                 <ActionBar style={{width:'15%', height:'50vh'}}/>
