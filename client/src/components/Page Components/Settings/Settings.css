@@ -22,3 +22,117 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+#general-title{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+}
+
+.edit-actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 5%;
+    margin-left: auto;
+}
+
+.header-section{
+    display: flex;
+    align-items: center;
+    margin: 2%;
+}
+
+.setting-section{
+    margin: 8%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.setting-seperator{
+    margin: auto;
+    width: 97%;
+    padding: 0.3%;
+    border-radius: 20px;
+    background-color: #EDEFF2;
+}
+.username-section{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+}
+
+.username-p{
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.text-p{
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: 100;
+    margin: 0; 
+    margin-left: 3%;
+    padding: 0;
+}
+
+.email-section{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+}
+
+.email-p{
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0; 
+    padding: 0;
+}
+
+.emailtext-p{
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: 100;
+    text-decoration: underline;
+    margin: 0; 
+    margin-left: 3%;
+    padding: 0;
+}
+
+.password-section{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 25px;
+}
+
+.password-p{
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.button-section{
+    margin: 2%;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.delete-section{
+    margin: 8%;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+  }
