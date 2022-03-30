@@ -84,9 +84,9 @@ const ListPost = () => {
                     <CommentItem user="Markus" bg="red">Great List</CommentItem>
                     <CommentItem user="Frank" bg="purple">There are other stuff due that needs to be added to this list</CommentItem>
                     <div className="add-comment">
-                        <h3>Add Comment</h3>
+                        <h3 style={{marginBottom:'1%'}}>Add Comment</h3>
                         <div className="comment-input">
-                            <TextInput />
+                            <TextInput inputStyle={{margin:'0', width:'97%'}} style={{width:'100%', margin: "0", marginBottom:"0"}}/>
                             <Send style={{color:'#4285F4', marginLeft:'1%', fontSize:'xx-large'}}/>
                         </div>
                     </div>
