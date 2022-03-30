@@ -33,6 +33,10 @@ h1{
     align-items: center;
 }
 
+.form-div{
+    width: 50%;
+}
+
 .button-div{
     text-align: center;
 }

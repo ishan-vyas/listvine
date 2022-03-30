@@ -69,6 +69,7 @@
 .comment-input{
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 /* 
@@ -167,7 +168,7 @@
 */
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
   }
   
   /* Track */

@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
 
+.input-holder{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 input{
     background: #EDEFF2;
     border-radius: 20px;
@@ -9,7 +15,7 @@ input{
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    width: 20vw;
+    width: 70%;
     height: 3vh;
     margin-bottom: 5%;
     font-family: 'Roboto', sans-serif;
@@ -18,4 +24,9 @@ input{
 
 label{
     text-align: left;
+}
+
+.input-label{
+    flex-basis: 1;
+    width: 70%;
 }

@@ -1,5 +1,8 @@
 .main-newsfeed-div{
-    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
     height: 100vh;
     background-color: #EDEFF2;
@@ -7,8 +10,8 @@
 
 .newsfeed-div{
     display: flex;
-    margin-top: 4%;
     width: 100%;
+    margin-top: 1%;
     justify-content: space-evenly;
     align-items: flex-start;
 }
