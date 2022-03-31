@@ -21,6 +21,7 @@
 }
 
 .actionbar-p {
+    font-family: 'Roboto', sans-serif;
     text-justify: inter-character;
     text-align-last: justify;
 }

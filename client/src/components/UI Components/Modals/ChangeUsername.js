@@ -8,7 +8,7 @@ import './ChangeUsername.css';
 const ChangeUsername = (props) => {
 
     const { user } = useAuth();
-    const [username, setUsername] = useState("");
+    const [newUsername, setNewUsername] = useState("");
     const [password, setPassword] = useState("");
 
     return(
@@ -18,11 +18,11 @@ const ChangeUsername = (props) => {
                     <h1>Change Username</h1>
                 </div>
                 <div className="modal-body">
-                <p>Current Username</p>
-                <br />
-                <p className='user'>{user.displayName}</p>
-                <TextInput value={username} onChange={(e) => {setUsername(e.target.value)}} type='user'>Enter New Username</TextInput>
-                <TextInput value={password} onChange={(e) => {setPassword(e.target.value)}} type='password'>Enter Password</TextInput>
+                    <p style={{marginLeft:'15%'}}>Current Username:</p>
+                    <br />
+                    <p className='user'>{user.displayName}</p>
+                    <TextInput value={newUsername} onChange={(e) => {setNewUsername(e.target.value)}} type='user'>Enter New Username:</TextInput>
+                    <TextInput value={password} onChange={(e) => {setPassword(e.target.value)}} type='password'>Enter Password:</TextInput>
                 </div>
                 <div className="modal-footer">
                     <Button onClick={props.cancelHandler} style={{backgroundColor: '#EDEFF2', color: 'black', marginRight:'5%'}}>Cancel</Button>
