@@ -6,6 +6,8 @@ import { useAuth } from "../../../context/UserAuthContext";
 
 function Home(){
 
+    const {user} = useAuth();
+
     return(
         <div className="main-home-div">
             <Navbar />

@@ -21,46 +21,46 @@ function ActionBar(props){
     return(
         <div className="actionbar-div" style={props.style}>
             <div className="home-action">
-                <Link to="/home">
+                <Link to="/home" style={{textDecoration:'none', color:'black'}}>
                     <HomeOutlined fontSize="large"/>
                 </Link>
-                <Link to="/home">
+                <Link to="/home" style={{textDecoration:'none', color:'black'}}>
                     <p className="actionbar-p">Home</p>
                 </Link>
             </div>
             <div className="seperator"></div>
             <div className="newsfeed-action">
-                <Link to="/newsfeed">
+                <Link to="/newsfeed" style={{textDecoration:'none', color:'black'}}>
                     <ListAltOutlined fontSize="large"/>
                 </Link>
-                <Link to="/newsfeed">
+                <Link to="/newsfeed" style={{textDecoration:'none', color:'black'}}>
                     <p className="actionbar-p">Newsfeed</p>
                 </Link>
             </div>
             <div className="seperator"></div>
             <div className="newlist-action">
-                <Link to="/newlist">
+                <Link to="/newlist" style={{textDecoration:'none', color:'black'}}>
                     <CreateOutlined fontSize="large"/>
                 </Link>
-                <Link to="/newlist">
+                <Link to="/newlist" style={{textDecoration:'none', color:'black'}}>
                     <p className="actionbar-p">New List</p>
                 </Link>
             </div>
             <div className="seperator"></div>
             <div className="invitations-action">
-                <Link to="/invitations">
+                <Link to="/invitations" style={{textDecoration:'none', color:'black'}}>
                     <CardGiftcardOutlined fontSize="large"/>
                 </Link>
-                <Link to="/invitations">
+                <Link to="/invitations" style={{textDecoration:'none', color:'black'}}>
                     <p className="actionbar-p">Invitations</p>
                 </Link>
             </div>
             <div className="seperator"></div>
             <div className="invitations-action">
-                <Link to="/settings">
+                <Link to="/settings" style={{textDecoration:'none', color:'black'}}>
                     <SettingsOutlined fontSize="large"/>
                 </Link>
-                <Link to="/settings">
+                <Link to="/settings" style={{textDecoration:'none', color:'black'}}>
                     <p className="actionbar-p">Settings</p>
                 </Link>
             </div>
