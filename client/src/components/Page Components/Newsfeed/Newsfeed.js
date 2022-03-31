@@ -20,7 +20,7 @@ function Newsfeed(){
 
     return(
         <div className="main-newsfeed-div">
-            <Navbar>Ishan Vyas</Navbar>
+            <Navbar />
             {confirmState && (<Confirm confirmHandler={confirmHandler} cancelHandler={cancelHandler} title="Are you sure you want to publish?">
                 You are about to delete this list, it will no longer show up in your 'My Lists' Section.
             </Confirm>)}

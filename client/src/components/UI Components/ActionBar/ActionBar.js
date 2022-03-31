@@ -1,9 +1,23 @@
 import React from "react";
 import './ActionBar.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HomeOutlined, ListAltOutlined, CreateOutlined, CardGiftcardOutlined, SettingsOutlined, ExitToAppOutlined } from '@material-ui/icons';
+import { useAuth } from "../../../context/UserAuthContext";
 
 function ActionBar(props){
+
+    const { logOut } = useAuth();
+    const navigate = useNavigate();
+
+    const logOutHandler = async () => {
+        try {
+            await logOut();
+            navigate("/");
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return(
         <div className="actionbar-div" style={props.style}>
             <div className="home-action">
@@ -51,13 +65,9 @@ function ActionBar(props){
                 </Link>
             </div>
             <div className="seperator"></div>
-            <div className="logout-action">
-                <Link to='/login'>
-                    <ExitToAppOutlined fontSize="large"/>
-                </Link>
-                <Link to="/login">
-                    <p className="actionbar-p">Log Out</p>
-                </Link>
+            <div className="logout-action" onClick={logOutHandler}>
+                <ExitToAppOutlined fontSize="large"/>
+                <p className="actionbar-p">Log Out</p>
             </div>
         </div>
     );

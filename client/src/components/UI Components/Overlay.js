@@ -5,7 +5,7 @@ function Overlay(){
     return(
         <div className="overlay">
             <div className="image-overlay">
-                <img src="/images/listImage.jpg"/>
+                <img alt="overlay-image" src="/images/listImage.jpg"/>
             </div>
             <div className="color-overlay"></div>
         </div>

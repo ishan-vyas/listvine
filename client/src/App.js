@@ -11,20 +11,36 @@ import Newsfeed from './components/Page Components/Newsfeed/Newsfeed';
 import Settings from './components/Page Components/Settings/Settings';
 import NewList from './components/Page Components/NewList/NewList';
 import Invitations from './components/Page Components/Invitations/Invitations';
+import { UserAuthContextProvider } from './context/UserAuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
-        <Route path="/newsfeed" element={<Newsfeed />}></Route>
-        <Route path="/newlist" element={<NewList />}></Route>
-        <Route path="/home" element={<Home />}></Route>
-        <Route path="/invitations" element={<Invitations />}></Route>
-        <Route path="/settings" element={<Settings />}></Route>
-      </Routes>
+      <UserAuthContextProvider>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
+          {/* Protected Routes */}
+          <Route path="/newsfeed" element={<ProtectedRoute>
+            <Newsfeed />
+          </ProtectedRoute>}></Route>
+          <Route path="/newlist" element={<ProtectedRoute>
+            <NewList />
+          </ProtectedRoute>}></Route>
+          <Route path="/home" element={<ProtectedRoute>
+            <Home />
+          </ProtectedRoute>}></Route>
+          <Route path="/invitations" element={<ProtectedRoute>
+            <Invitations />
+          </ProtectedRoute>}></Route>
+          <Route path="/settings" element={<ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>}></Route>
+        </Routes>
+      </UserAuthContextProvider>
     </Router>
   );
 }

@@ -74,9 +74,9 @@ const ListPost = () => {
                 {share ? (<Share onClick={() => setShare(!share)} fontSize="large"/>) : (<ShareOutlined onClick={() => setShare(!share)} fontSize="large"/>)}
                 <Edit fontSize="large"/>
             </div>
-            <div class="break"></div>
+            <div className="break"></div>
             <div className='listpost-seperator'></div>
-            <div class="break"></div>
+            <div className="break"></div>
             <div className="comment-section">
                 <p onClick={() => setComment(!comment)} className="comment-number"><u>2 comments</u></p>
                 {comment && (
