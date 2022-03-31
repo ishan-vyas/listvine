@@ -1,20 +1,31 @@
 import React, { useState } from "react";
-import Modal from './Modal'
 import './Settings.css';
 import Navbar from "../../UI Components/Navbar/Navbar";
-import DeleteButton from "../../UI Components/DeleteButton";
 import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import { Edit } from '@material-ui/icons';
 import Confirm from "../../UI Components/Modals/Confirm";
+import { useAuth } from "../../../context/UserAuthContext";
 
 
 function Settings(){
-    const [isOpen, setIsOpen] = useState(false)
+    const [confirmIsOpen, setConfirmIsOpen] = useState(false);
+
+    const { user, changeUsername, changePassword, deleteAccount } = useAuth();
+
+    const deleteAccountHandler = async () => {
+        try {
+            await deleteAccount();
+            setConfirmIsOpen(false);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return(
         
         <div className="main-settings-div">
-            <Navbar>Ishan Vyas</Navbar>
-            {isOpen && (<Confirm confirmHandler={() => {setIsOpen(false)}} cancelHandler={() => {setIsOpen(false)}} title="Are you sure you want to delete this account?">
+            <Navbar />
+            {confirmIsOpen && (<Confirm confirmHandler={deleteAccountHandler} cancelHandler={() => {setConfirmIsOpen(false)}} title="Are you sure you want to delete this account?">
                         You are about to delete an entire account, you will no longer be able to access listvine anymore.
                         </Confirm>)}
             <div className="settings-div">
@@ -26,14 +37,14 @@ function Settings(){
                     <div className="setting-section">
                         <div className="username-section">
                             <p className="username-p">Username:</p>
-                            <p className="text-p">Ishan Vyas</p>
+                            <p className="text-p">{user.displayName}</p>
                             <div className="edit-actions">
                                 <Edit fontSize="large"/>
                             </div>
                         </div>
                         <div className="email-section">
                             <p className="email-p">Email:</p>
-                            <p className="emailtext-p">ishan.random01@gmail.com</p>
+                            <p className="emailtext-p">{user.email}</p>
                         </div>
                         <div className="password-section">
                             <p className="password-p">Password: </p>
@@ -53,7 +64,7 @@ function Settings(){
                                 <label for="note">deleting this account will lead to permanent oss of data</label>
                             </div>
                         </div>
-                        <deletebutton onClick={() => setIsOpen(true)}>Delete Account</deletebutton>
+                        <deletebutton onClick={() => setConfirmIsOpen(true)}>Delete Account</deletebutton>
                     </div>
                 </div>
                 <ActionBar style={{width:'15%', height:'50vh'}}/>

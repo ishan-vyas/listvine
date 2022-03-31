@@ -1,16 +1,29 @@
-import React from 'react';
+import {React, useState} from 'react';
 import Overlay from '../../UI Components/Overlay';
 import TextInput from '../../UI Components/TextInputs/TextInput';
 import Button from '../../UI Components/Button';
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+import { useAuth } from '../../../context/UserAuthContext';
+
 import './Login.css';
 
 function Login(props){
 
-    const submitForm = (e) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError ] = useState("");
+    const { logIn } = useAuth();
+    const navigate = useNavigate();
+
+    const loginHandler = async (e) => {
         e.preventDefault();
-        console.log('This is working');
-    }
+        try {
+            await logIn(email, password);
+            navigate("/home");
+        } catch (error) {
+            setError(error.message);
+        }
+    };
 
     return (
         <div className='main-div'>
@@ -23,13 +36,12 @@ function Login(props){
                         <h1>listvine</h1>
                     </div>
                     <div className='form-div'>
-                        <form onSubmit={submitForm}>
-                            <TextInput type='text'>Username:</TextInput>
-                            <TextInput type='password'>Password:</TextInput>
+                        <form onSubmit={loginHandler}>
+                        <TextInput value={email} onChange={(e) => {setEmail(e.target.value)}} type='text'>Email:</TextInput>
+                            <TextInput value={password} onChange={(e) => {setPassword(e.target.value)}} type='password'>Password:</TextInput>
+                            {error && (<p style={{margin:'0', padding:'0', color:'red', marginBottom:'1%', fontSize:'large', textAlign:'center'}}>{error}</p>)}
                             <div className='button-div'>
-                                <Link to="/home">
-                                    <Button>Log In</Button>
-                                </Link>
+                                <Button type="submit">Log In</Button>
                             </div>
                         </form>
                     </div>
@@ -38,7 +50,7 @@ function Login(props){
                         <p>or</p>
                         <div></div>
                     </div>
-                    <p class="change-link">Don't have an account? <Link to='/signup'>
+                    <p className="change-link">Don't have an account? <Link to='/signup'>
                     <u>Sign Up</u></Link> here.</p>
                 </div>
             </div>
