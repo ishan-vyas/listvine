@@ -39,6 +39,7 @@ function NewList(){
                         </div>
                     </div>
                     <div className="user-section">
+                     <TransparentTextInput defaultValue="Add User ..."/>
                         
                     </div>
                     <div className="button-section">
