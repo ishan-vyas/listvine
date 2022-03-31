@@ -1,0 +1,44 @@
+.modalBackground {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(200, 200, 200, 0.294);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.user{
+    text-align: center;
+    font-size: 50%;
+}
+
+.modalContainer {
+    background-color: white;
+    border-radius: 20px;
+    width: 35%;
+    padding: 0.5%;
+    padding-left: 3%;
+    padding-right: 3%;
+    box-shadow: 0 0 20px rgb(200, 200, 200);
+}
+
+.modal-title > h1{
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+}
+
+.modal-body > p{
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-size: x-large;
+    margin: 0;
+    padding: 0;
+}
+
+.modal-footer{
+    padding-top: 3%;
+    text-align: center;
+}
