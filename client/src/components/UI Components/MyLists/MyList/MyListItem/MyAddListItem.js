@@ -7,11 +7,10 @@ function MyAddListItem(props) {
     return (
 
         <div className='list-item'>
-            <div>
+            <div className='clickable-icon'>
                 <AddCircleOutline fontSize='large'/>
             </div>
             <p>{props.text}</p>
-            
         </div>
 
     );

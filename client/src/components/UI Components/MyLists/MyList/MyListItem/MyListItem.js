@@ -1,8 +1,6 @@
 import React from 'react';
 import './MyListItem.css';
 import { DeleteOutline } from '@material-ui/icons';
-// import CheckContainer from './CheckContainer';
-// import DeleteIconContainer from './DeleteIconContainer';
 
 function MyListItem(props) {
 
@@ -10,7 +8,7 @@ function MyListItem(props) {
 
         <div className='list-item'>
             {/* <DeleteIconContainer/> */}
-            <div>
+            <div className='clickable-icon'>
                 <DeleteOutline fontSize='large'/>
             </div>
             <div className="check-container">
