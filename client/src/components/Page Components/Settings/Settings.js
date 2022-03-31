@@ -88,7 +88,7 @@ function Settings(){
                                 <label for="note">deleting this account will lead to permanent oss of data</label>
                             </div>
                         </div>
-                        <deletebutton onClick={() => setConfirmIsOpen(true)}>Delete Account</deletebutton>
+                        <deletebutton style={{color:'red', fontFamily:'Roboto', fontSize:'large'}} onClick={() => setConfirmIsOpen(true)}><u>Delete Account</u></deletebutton>
                     </div>
                 </div>
                 <ActionBar style={{width:'15%', height:'50vh'}}/>

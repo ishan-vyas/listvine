@@ -34,11 +34,13 @@
 
 .mylist-btn.blue
 {
+    font-family: 'Roboto', sans-serif;
     background-color: #4285F4;
 }
 
 .mylist-btn.red
 {
+    font-family: 'Roboto', sans-serif;
     background-color: red;
 }
 

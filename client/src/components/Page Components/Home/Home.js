@@ -8,6 +8,8 @@ import MyPublishedLists from "../../UI Components/MyPublishedLists/MyPublishedLi
 
 function Home(){
 
+    const {user} = useAuth();
+
     return(
         <div className="main-home-div">
             <Navbar />
