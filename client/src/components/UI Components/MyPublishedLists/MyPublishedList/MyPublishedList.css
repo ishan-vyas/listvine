@@ -1,0 +1,42 @@
+.mypublishedlist {
+    margin: 0.4em;
+    width: 90%;
+    background-color: lightgray;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mypublishedlist-title{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    margin-top: 0.4em;
+    margin-left: 0.4em;
+    padding: 0;
+    font-weight: bold;
+    font-size: 1.8em;
+}
+
+.mypublishedlist-seperator{
+    width: 92%;
+    padding: 0.3%;
+    border-radius: 20px;
+    background-color: #EDEFF2;
+    margin-left: 0.6em;
+    margin-right: 0.6em;
+}
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.mypublishedlist-comment-section {
+    margin-left: 0.6em;
+    width: 95%;
+    text-align: left;
+}
+.mypublishedlist-comment-section p {
+    display: inline-flex;
+    margin-left: 0.6em;
+}

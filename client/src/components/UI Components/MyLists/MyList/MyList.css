@@ -1,0 +1,44 @@
+.mylist {
+    margin: 0.4em;
+    width: 90%;
+    background-color: lightgray;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mylist-title{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    margin-top: 0.4em;
+    margin-left: 0.4em;
+    padding: 0;
+    font-weight: bold;
+    font-size: 1.8em;
+}
+
+.mylist-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.mylist-btn {
+    color: white;
+    background-color: black;
+    border-radius: 8px;
+    padding: 0.6em 2em;
+    margin: 0.4em;
+    cursor:pointer;
+}
+
+.mylist-btn.blue
+{
+    background-color: #4285F4;
+}
+
+.mylist-btn.red
+{
+    background-color: red;
+}
+
