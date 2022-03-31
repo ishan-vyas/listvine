@@ -23,5 +23,9 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    overflow: auto;
+}
+
+.info-div-child {
+    margin-top: 0.5%;
 }
