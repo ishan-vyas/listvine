@@ -23,6 +23,7 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .info-div-child {
