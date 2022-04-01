@@ -34,3 +34,82 @@
     flex-direction: column;
     overflow-y: auto;
 }
+
+#quicklist-title{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    margin-top: 10%;
+    margin-left: 10%;
+    padding: 0;
+    font-weight: 400;
+    font-size: large;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    margin: 2%;
+}
+
+.list-actions-section{
+    margin: 8%;
+   
+   
+  
+    
+}
+
+.list-items-section{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.list-items-checkbox{
+    margin-top: 10%;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+}
+
+.create-button-section{
+    margin: 8%;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.users-section{
+    margin: 8%;
+    margin-top: 80%;
+    margin-bottom: 0;
+   
+
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+
+.user-input{
+    background: white;
+    border-radius: 0;
+    outline: none;
+    border-bottom: 5px solid #EDEFF2;
+    width: 80%;
+    height: 3vh;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    margin-left: 4%;
+    font-family: 'Roboto', sans-serif;
+    font-size: large;
+    transition: ease 0.3s;
+}
+
+.user-input:focus{
+    border-color: #8C8C8C;
+    transition: ease 0.3s;
+}
+
+.user-input:hover{
+    border-color: #8C8C8C;
+    transition: ease 0.3s;
+}
