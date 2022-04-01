@@ -14,7 +14,7 @@ function Settings(){
     const [changePasswordIsOpen, setchangePasswordIsOpen] = useState(false);
     const [changeUsernameIsOpen, setchangeUsernameIsOpen] = useState(false);
 
-    const { user, changeUsername, changePassword, deleteAccount } = useAuth();
+    const { user, changeUsername, changePassword, deleteAccount, reauthenticateUser } = useAuth();
 
     const deleteAccountHandler = async () => {
         try {
@@ -25,22 +25,33 @@ function Settings(){
         }
     }
 
-    const changePasswordHandler = async () => {
+    const changePasswordHandler = async (oldPassword, newPassword) => {
         try {
-            await changePassword();
-            setchangePasswordIsOpen(false);
-        } catch (error) {
-            console.log(error.message);
-        }
+            console.log("This is from settings:", oldPassword);
+            await reauthenticateUser(oldPassword);
+            try {
+                await changePassword(newPassword);
+                setchangePasswordIsOpen(false);
+            } catch (error2) {
+                throw error2;
+            }
+        } catch (error1) {
+            throw error1;
+        } 
     }
 
-    const changeUsernameHandler = async () => {
+    const changeUsernameHandler = async (newUsername, password) => {
         try {
-            await changeUsername();
-            setchangeUsernameIsOpen(false);
-        } catch (error) {
-            console.log(error.message);
-        }
+            await reauthenticateUser(password);
+            try {
+                await changeUsername(newUsername);
+                setchangeUsernameIsOpen(false);
+            } catch (error2) {
+                throw error2;
+            }
+        } catch (error1) {
+            throw error1;
+        }   
     }
 
     return(
@@ -51,7 +62,7 @@ function Settings(){
                         You are about to delete an entire account, you will no longer be able to access listvine anymore.
                         </Confirm>)}
             {changePasswordIsOpen && (<ChangePassword changePwHandler={changePasswordHandler} cancelHandler={() => {setchangePasswordIsOpen(false)}}></ChangePassword>)}
-            {changeUsernameIsOpen && (<ChangeUsername chanegUsHandler={changeUsernameHandler} cancelHandler={() => {setchangeUsernameIsOpen(false)}}></ChangeUsername>)}
+            {changeUsernameIsOpen && (<ChangeUsername changeUsHandler={changeUsernameHandler} cancelHandler={() => {setchangeUsernameIsOpen(false)}}></ChangeUsername>)}
             <div className="settings-div">
                 <div className="general-div">
                     <div className="header-section">
@@ -82,12 +93,6 @@ function Settings(){
                     </div>
                     <div className="setting-seperator"></div>
                     <div className="delete-section">
-                        <div className="modal-bg">
-                            <div className="modal">
-                                <h2>Are you sure you want to delete this account?</h2>
-                                <label for="note">deleting this account will lead to permanent oss of data</label>
-                            </div>
-                        </div>
                         <deletebutton style={{color:'red', fontFamily:'Roboto', fontSize:'large'}} onClick={() => setConfirmIsOpen(true)}><u>Delete Account</u></deletebutton>
                     </div>
                 </div>
