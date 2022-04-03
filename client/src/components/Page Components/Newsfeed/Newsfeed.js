@@ -5,8 +5,27 @@ import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import ListPost from "../../UI Components/ListPost/ListPost";
 import TransparentTextInput from "../../UI Components/TextInputs/TransparentTextInput";
 import Button from "../../UI Components/Button";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useState, useEffect } from "react";
 
 function Newsfeed(){
+
+    const [posts, setPosts] = useState();
+    const listPost = collection(db, 'Post');
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
+            const tempPosts = [];
+            querySnapshot.forEach((doc) => {
+                tempPosts.push({...doc.data(), id: doc.id});
+            });
+            setPosts(tempPosts);
+            console.log("This is from useEffect,", tempPosts);
+        });
+
+        return unsubscribe;
+    }, []);
 
     return(
         <div className="main-newsfeed-div">
@@ -38,12 +57,9 @@ function Newsfeed(){
                 
                 </div>
                 <div className="livelist-div">
-                    <ListPost />
-                    <ListPost />
-                    <ListPost />
-                    <ListPost />
-                    <ListPost />
-                    <ListPost />
+                    {posts?.map((post) => {
+                        return (<ListPost userDetails={post?.userID} id={post?.id} listID={post?.list}/>)
+                    })}
                 </div>
                 <ActionBar style={{width:'15%', height: '50vh'}} />
             </div>
