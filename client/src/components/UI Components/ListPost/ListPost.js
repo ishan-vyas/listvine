@@ -1,21 +1,23 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ListPost.css";
 import TextInput from '../TextInputs/TextInput';
 import Button from '../Button';
 import {db} from "../../firebase";
-import { getDoc, doc, collection, getDocs, onSnapshot, addDoc } from "firebase/firestore";
+import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc } from "firebase/firestore";
 import { useAuth } from "../../../context/UserAuthContext";
 import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Share, ShareOutlined, Edit, Send} from '@material-ui/icons';
+import Confirm from "../Modals/Confirm";
 
-const UserTag = (props) => {
+export const UserTag = (props) => {
     return(
         <div className="usertag">
             <div className="color-container" style={{backgroundColor:props.bg}}>
                 <div className="usercolor">
                 </div>
             </div>
-            <p>{props.children}</p>
+            <p style={{color:'black'}}>{props.children}</p>
         </div>
     );
 }
@@ -57,6 +59,30 @@ const ListPost = (props) => {
     const [comments, setComments] = useState();
     const [commentContent, setCommentContent] = useState();
     const listPost = collection(db, 'Post', props.id,'Comments');
+    const [confirm, setConfirm ] = useState(false);
+    const navigate = useNavigate();
+
+    const copyList = async () => {
+        console.log(list);
+        console.log(listTasks);
+        const copiedListID = "C-"+list.id.substring(0,8)+user.uid.substring(0,10);
+        console.log(copiedListID);
+        await setDoc(doc(db, "List", copiedListID), {
+            userID: user.uid,
+            users: [user.uid],
+            title: list.title,
+            published: false
+        }).then(() => {
+            listTasks.forEach((t) => {
+                addDoc(collection(db, "List", copiedListID, "Tasks"), {
+                    taskContent: t.taskContent,
+                    taskStatus: t.taskStatus
+                })
+            })
+        });
+        navigate('/home');
+        
+    }
 
     const addComment = async () => {
         if(commentContent !== ""){
@@ -90,6 +116,7 @@ const ListPost = (props) => {
     };
 
     useEffect(() => {
+        console.log("useEffect from ListPost.");
         getList();
         getTasks();
         const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
@@ -104,6 +131,10 @@ const ListPost = (props) => {
     }, []);
 
     return (
+        <>
+        {confirm && <Confirm confirmHandler={copyList} pos={true} cancelHandler={()=>setConfirm(false)} title="Clone List">
+            This will make a copy of this list and add it to your 'My Lists' section in the home page. Allowing you to edit this list and its content.
+            </Confirm>}
         <div className="listpost-container">
             <div className="listpost-content">
                 <div className="members">
@@ -122,7 +153,7 @@ const ListPost = (props) => {
             <div className="listpost-actions">
                 {like ? (<Whatshot onClick={() => setLike(!like)} fontSize="large"/>) : (<WhatshotOutlined onClick={() => setLike(!like)} fontSize="large"/>)}
                 {comment ? (<Comment onClick={() => setComment(!comment)} fontSize="large"/>) : (<CommentOutlined onClick={() => setComment(!comment)} fontSize="large"/>)}
-                <Edit fontSize="large"/>
+                <Edit fontSize="large" onClick={() => setConfirm(true)}/>
             </div>
             <div className="break"></div>
             <div className='listpost-seperator'></div>
@@ -145,6 +176,7 @@ const ListPost = (props) => {
                 )}
             </div>
         </div>
+        </>
     );
 }
 

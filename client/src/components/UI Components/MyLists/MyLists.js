@@ -12,11 +12,11 @@ function MyLists() {
     const { user } = useAuth();
 
     useEffect(() => {
-        const q = query(listCollectionRef, where("userID", "==", user.uid));
+        console.log("useEffect from MyLists.");
+        const q = query(listCollectionRef, where("users", "array-contains", user.uid));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const lists = [];
             querySnapshot.forEach((doc) => {
-                console.log(doc);
                 lists.push({...doc.data(), id: doc.id, taskRef: "k"});
             });
             setMyLists(lists);
@@ -29,7 +29,7 @@ function MyLists() {
         <div className='mylists-content'>
             <h1 className='mylists-title'>My Lists</h1>
             {myLists ? (myLists?.map((list) => {
-                return (< MyList listID={list?.id} key={list?.id} title={list?.title}/>)
+                return (< MyList listUsers={list?.users} listID={list?.id} key={list?.id} title={list?.title}/>)
             })) : (<p>You have no lists</p>)}
         </div>
     );
