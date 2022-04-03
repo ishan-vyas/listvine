@@ -2,7 +2,7 @@ import React from 'react';
 import './Confirm.css';
 import Button from '../Button';
 
-const Confirm = (props) => {
+const MemberModal = (props) => {
     return(
         <div className="modalBackground" style={{color:'red'}}>
             <div className='modalContainer'>
@@ -10,17 +10,14 @@ const Confirm = (props) => {
                     <h1>{props.title}</h1>
                 </div>
                 <div className="modal-body">
-                    <p>Note:</p>
-                    <br />
-                    <p>{props.children}</p>
+                    {props.children}
                 </div>
                 <div className="modal-footer">
-                    <Button onClick={props.cancelHandler} style={{backgroundColor: '#EDEFF2', color: 'black', marginRight:'5%'}}>Cancel</Button>
-                    <Button onClick={props.confirmHandler} style={{backgroundColor: props.pos ? '#47D26E' : '#EA4335', color: 'white'}}>Yes, I am Sure</Button>
+                    <Button onClick={props.closeHandler} style={{backgroundColor: '#EDEFF2', color: 'black', marginRight:'5%'}}>Close</Button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Confirm;
+export default MemberModal;

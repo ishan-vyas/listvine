@@ -7,6 +7,12 @@
     flex-direction: column;
 }
 
+.mylist-title-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .mylist-title{
     font-family: 'Roboto', sans-serif;
     color: black;

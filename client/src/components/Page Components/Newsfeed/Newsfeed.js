@@ -15,13 +15,13 @@ function Newsfeed(){
     const listPost = collection(db, 'Post');
 
     useEffect(() => {
+        console.log("useEffect from Newsfeed.");
         const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
             const tempPosts = [];
             querySnapshot.forEach((doc) => {
                 tempPosts.push({...doc.data(), id: doc.id});
             });
             setPosts(tempPosts);
-            console.log("This is from useEffect,", tempPosts);
         });
 
         return unsubscribe;
@@ -58,7 +58,7 @@ function Newsfeed(){
                 </div>
                 <div className="livelist-div">
                     {posts?.map((post) => {
-                        return (<ListPost userDetails={post?.userID} id={post?.id} listID={post?.list}/>)
+                        return (<ListPost key={post?.id} userDetails={post?.userID} id={post?.id} listID={post?.list}/>)
                     })}
                 </div>
                 <ActionBar style={{width:'15%', height: '50vh'}} />
