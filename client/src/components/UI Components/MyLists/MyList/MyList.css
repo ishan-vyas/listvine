@@ -1,7 +1,7 @@
 .mylist {
     margin: 0.4em;
     width: 90%;
-    background-color: lightgray;
+    background-color: #edeff2;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -12,6 +12,7 @@
     color: black;
     margin-top: 0.4em;
     margin-left: 0.4em;
+    margin-bottom: 0.4em;
     padding: 0;
     font-weight: bold;
     font-size: 1.8em;

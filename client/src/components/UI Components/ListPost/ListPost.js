@@ -1,9 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ListPost.css";
 import TextInput from '../TextInputs/TextInput';
 import Button from '../Button';
-import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Share, ShareOutlined, Edit, Send } from '@material-ui/icons';
+import {db} from "../../firebase";
+import { getDoc, doc, collection, getDocs, onSnapshot, addDoc } from "firebase/firestore";
+import { useAuth } from "../../../context/UserAuthContext";
+import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Share, ShareOutlined, Edit, Send} from '@material-ui/icons';
 
 const UserTag = (props) => {
     return(
@@ -44,50 +47,98 @@ const CommentItem = (props) => {
     );
 }
 
-const ListPost = () => {
+const ListPost = (props) => {
 
     const [like, setLike] = useState(false);
     const [comment, setComment] = useState(false);
-    const [share, setShare] = useState(false);
+    const { user, users } = useAuth();
+    const [list, setList] = useState();
+    const [listTasks, setListTasks] = useState();
+    const [comments, setComments] = useState();
+    const [commentContent, setCommentContent] = useState();
+    const listPost = collection(db, 'Post', props.id,'Comments');
+
+    const addComment = async () => {
+        if(commentContent !== ""){
+            await addDoc(collection(db, "Post", props.id, "Comments"), {
+                commentContent: commentContent,
+                userID: user.uid
+            });
+        }
+        setCommentContent("");
+    };
+
+    const getList = async () => {
+        const docRef = doc(db, "List", props.listID);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setList({...docSnap.data(), id:docSnap.id});
+        } else {
+            // doc.data() will be undefined in this case
+            return {};
+        }
+    };
+
+    const getTasks = async () => {
+        const querySnapshot = await getDocs(collection(db, "List", props.listID, "Tasks"));
+        const tasks = []
+        querySnapshot.forEach((doc) => {
+            tasks.push({...doc.data(), id:doc.id});
+        });
+        setListTasks(tasks);
+    };
+
+    useEffect(() => {
+        getList();
+        getTasks();
+        const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
+            const tempComments = [];
+            querySnapshot.forEach((doc) => 
+                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID].username, userColor: users[doc.data().userID].userColor})
+            )
+            setComments(tempComments);
+        });
+
+        return unsubscribe;
+    }, []);
 
     return (
         <div className="listpost-container">
             <div className="listpost-content">
                 <div className="members">
-                    <UserTag bg="teal">Christopher Schultze</UserTag>
+                    <UserTag bg={users[props.userDetails]?.userColor}>{users[props.userDetails]?.username}</UserTag>
                     <UserTag bg="green">Ishan Vyas</UserTag>
                 </div>
                 <div className="userlist">
-                    <h1 class="listpost-title">TO-DO List</h1>
+                    <h1 className="listpost-title">{list?.title}</h1>
                     <div className="listitem-container">
-                        <ListItem>SENG 513 - UI Mockups</ListItem>
-                        <ListItem>SENG 513 - Technical Presentation</ListItem>
-                        <ListItem>SENG 513 - Project Deliverables</ListItem>
-                        <ListItem>SENG 401 - Retrospective Paper</ListItem>
-                        <ListItem>SENG 300 - Scrum Meeting</ListItem>
+                        {listTasks?.map((task) => {
+                            return (<ListItem>{task.taskContent}</ListItem>);
+                        })}
                     </div>
                 </div>  
             </div>
             <div className="listpost-actions">
                 {like ? (<Whatshot onClick={() => setLike(!like)} fontSize="large"/>) : (<WhatshotOutlined onClick={() => setLike(!like)} fontSize="large"/>)}
                 {comment ? (<Comment onClick={() => setComment(!comment)} fontSize="large"/>) : (<CommentOutlined onClick={() => setComment(!comment)} fontSize="large"/>)}
-                {share ? (<Share onClick={() => setShare(!share)} fontSize="large"/>) : (<ShareOutlined onClick={() => setShare(!share)} fontSize="large"/>)}
                 <Edit fontSize="large"/>
             </div>
             <div className="break"></div>
             <div className='listpost-seperator'></div>
             <div className="break"></div>
             <div className="comment-section">
-                <p onClick={() => setComment(!comment)} className="comment-number"><u>2 comments</u></p>
+                <p onClick={() => setComment(!comment)} className="comment-number"><u>{comments?.length.toString() +' comments'}</u></p>
                 {comment && (
                 <>
-                    <CommentItem user="Markus" bg="red">Great List</CommentItem>
-                    <CommentItem user="Frank" bg="purple">There are other stuff due that needs to be added to this list</CommentItem>
+                    {comments.map((comment) => {
+                        return(<CommentItem user={comment.username} bg={comment.userColor}>{comment.commentContent}</CommentItem>);
+                    })}
                     <div className="add-comment">
                         <h3 style={{marginBottom:'1%', fontFamily:'Roboto'}}>Add Comment</h3>
                         <div className="comment-input">
-                            <TextInput inputStyle={{margin:'0', width:'97%'}} style={{width:'100%', margin: "0", marginBottom:"0"}}/>
-                            <Send style={{color:'#4285F4', marginLeft:'1%', fontSize:'xx-large'}}/>
+                            <TextInput value={commentContent} onChange={(e) => setCommentContent(e.target.value)} inputStyle={{margin:'0', width:'97%'}} style={{width:'100%', margin: "0", marginBottom:"0"}}/>
+                            <Send onClick={addComment} style={{color:'#4285F4', marginLeft:'1%', fontSize:'xx-large'}}/>
                         </div>
                     </div>
                 </>
