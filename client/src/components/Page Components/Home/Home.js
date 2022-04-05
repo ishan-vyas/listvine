@@ -9,7 +9,10 @@ import MyPublishedLists from "../../UI Components/MyPublishedLists/MyPublishedLi
 function Home(){
 
     const { getUsers } = useAuth();
-    getUsers();
+    useEffect( () => {
+        getUsers();
+    },
+    []);
 
     return(
         <div className="main-home-div">

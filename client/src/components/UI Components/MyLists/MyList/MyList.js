@@ -26,10 +26,11 @@ const MyList = (props) => {
 
     const getInvitations = async () => {
         const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
-
+        console.log('hello');
         const querySnapshot = await getDocs(q);
         const tempInvites = [];
         querySnapshot.forEach((doc) => {
+            console.log('hello');
             tempInvites.push({...doc.data(), id:doc.id})
         });
         setListInvitations(tempInvites);
@@ -40,6 +41,7 @@ const MyList = (props) => {
         console.log("useEffect from MyList.");
         const taskCollectionRef = collection(db, "List", props.listID, "Tasks");
         const unsubscribe = onSnapshot(taskCollectionRef, (querySnapshot) => {
+            console.log('hello');
             const tasksTemp = [];
             querySnapshot.forEach((doc) => {
                 tasksTemp.push({...doc.data(), id: doc.id});
@@ -52,6 +54,7 @@ const MyList = (props) => {
 
     const deleteListHandler = async () => {
         await deleteDoc(doc(db, "List", props.listID)).then(() => {
+            console.log('hello');
             const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
 
             const querySnapshot = getDocs(q);
@@ -65,6 +68,7 @@ const MyList = (props) => {
     const addItemToList = async () => {
         if (newItemContent !== "") {
             const taskColRef = collection(db, "List", props.listID, "Tasks");
+            console.log('hello');
             await addDoc(taskColRef, {
                 taskContent: newItemContent,
                 taskStatus: false,
@@ -100,7 +104,7 @@ const MyList = (props) => {
             {props.listUsers.map((u) => {
                 return (
                     <>
-                        <UserTag bg={users[u].userColor}>{users[u].username}</UserTag>
+                        <UserTag key={u} bg={users[u].userColor}>{users[u].username}</UserTag>
                          <br />
                     </>
                 )

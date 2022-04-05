@@ -15,6 +15,7 @@ export function UserAuthContextProvider({children}){
     async function getUser(userID){
         const docRef = doc(db, "User", userID);
         const docSnap = await getDoc(docRef);
+        console.log('hello getUser');
 
         if (docSnap.exists()) {
             return({...docSnap.data(), id:docSnap.id});
@@ -25,6 +26,7 @@ export function UserAuthContextProvider({children}){
     }
 
     async function getUsers(){
+        console.log('hello getUsers');
         const querySnapshot = await getDocs(collection(db, "User"));
         const tempUsers = {}
         querySnapshot.forEach((doc) => {

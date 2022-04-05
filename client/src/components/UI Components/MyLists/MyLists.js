@@ -12,9 +12,10 @@ function MyLists() {
     const { user } = useAuth();
 
     useEffect(() => {
-        console.log("useEffect from MyLists.");
+        console.log("hello useEffect from MyLists.");
         const q = query(listCollectionRef, where("users", "array-contains", user.uid));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            console.log('hello');
             const lists = [];
             querySnapshot.forEach((doc) => {
                 lists.push({...doc.data(), id: doc.id, taskRef: "k"});

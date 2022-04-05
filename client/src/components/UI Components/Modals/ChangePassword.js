@@ -13,6 +13,7 @@ const ChangePassword = (props) => {
     const [error, setError] = useState("");
 
     useEffect(() => {
+        console.log('hello');
         setError("");
     },[password, newPassword, confirmNewPassword]);
 
