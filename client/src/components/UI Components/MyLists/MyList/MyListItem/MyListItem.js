@@ -9,12 +9,11 @@ function MyListItem(props) {
         <div className='list-item'>
             {/* <DeleteIconContainer/> */}
             <div className='clickable-icon'>
-                <DeleteOutline fontSize='large'/>
+                <DeleteOutline onClick={props.onClick} fontSize='large'/>
             </div>
             <div className="check-container">
                 <div className="circular-check"></div>
             </div>
-
             <p>{props.text}</p>
             
         </div>

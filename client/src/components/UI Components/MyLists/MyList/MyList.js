@@ -3,7 +3,7 @@ import './MyList.css';
 import MyListItem from './MyListItem/MyListItem';
 import MyAddListItem from './MyListItem/MyAddListItem';
 import { useState, useEffect } from 'react';
-import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
+import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc } from 'firebase/firestore';
 import {db} from "../../../firebase"
 import Confirm from "../../Modals/Confirm";
 import MemberModal from '../../Modals/MemberModal';
@@ -11,7 +11,7 @@ import { MoreHoriz, MoreVert } from '@material-ui/icons';
 import { UserTag } from "../../ListPost/ListPost";
 import { useAuth } from "../../../../context/UserAuthContext";
 
-function MyList(props) {
+const MyList = (props) => {
 
     const [tasks, setTasks] = useState();
     const [listOpen, setListOpen] = useState(false);
@@ -20,6 +20,8 @@ function MyList(props) {
     const [member, setMember] = useState(false);
     const [invitation, setInvitation] = useState(false);
     const [listInvitations, setListInvitations] = useState(false);
+    const [newItemContent, setNewItemContent] = useState();
+    // const [delItemContent, setDelItemContent] = useState();
     const { users } = useAuth(); 
 
     const getInvitations = async () => {
@@ -60,15 +62,38 @@ function MyList(props) {
         setConfirm(false);
     }
 
+    const addItemToList = async () => {
+        if (newItemContent !== "") {
+            const taskColRef = collection(db, "List", props.listID, "Tasks");
+            await addDoc(taskColRef, {
+                taskContent: newItemContent,
+                taskStatus: false,
+            })
+            .then(() => {
+                setNewItemContent("");
+            })
+        }
+    }
+
+    const delItemFromList = async () => {
+        // const taskColRef = collection(db, "List", props.id.listID, "Tasks");
+        // await deleteDoc(
+        //     doc(db, taskColRef, /*todo*/ )
+        // )
+        // .then(() => {
+        //     // reload the set of lists
+        // })
+    }
+
     return (
         <>
         {confirm && 
         <Confirm confirmHandler={deleteListHandler} cancelHandler={() => setConfirm(false)} title="Are you sure you want to delete this list?">
-            You are about to delete '{props.title}' list, it will no longer show up in your 'My Lists' Section.
+            You are about to delete '{props.title}', it will no longer show up in your 'My Lists' Section.
         </Confirm>}
         {publish && 
         <Confirm pos={true} confirmHandler={() => setPublish(false)} cancelHandler={() => setPublish(false)} title="Publish List">
-            You are about to publish '{props.title}' list, this means all users of 'listvine' will be to view and clone this list. 
+            You are about to publish '{props.title}', this means all users of 'listvine' will be to view and clone this list. 
         </Confirm>}
         {member && 
         <MemberModal closeHandler={() => setMember(false)} title="List Members">
@@ -114,9 +139,9 @@ function MyList(props) {
 
                 <div>
                     {tasks?.map((task) => {
-                        return (< MyListItem key={task?.id} value={task?.id} text={task?.taskContent}/>)
+                        return (< MyListItem key={task?.id} value={task?.id} text={task?.taskContent} onClick={delItemFromList}/>)
                     })}
-                    < MyAddListItem text="Add new list item..." />
+                    < MyAddListItem onClick={addItemToList} value={newItemContent} onChange={(e) => setNewItemContent(e.target.value)} />
                 </div>
             </>)}
         </div>
