@@ -46,7 +46,7 @@ const MyPublishedList = (props) => {
 
     const [like, setLike] = useState(false);
     const [comment, setComment] = useState(false);
-    const [comments, setComments] = useState();
+    const [comments, setComments] = useState([]);
     const [commentContent, setCommentContent] = useState();
 
     const [list, setList] = useState();
