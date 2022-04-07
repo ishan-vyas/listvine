@@ -30,7 +30,7 @@ function MyPublishedLists() {
 
             {
                 myPosts ? (myPosts?.map((post) => {
-                    return (< MyPublishedList key={post?.id} postID={post?.id}  title='List Title 1' />)
+                    return (< MyPublishedList key={post?.id} postID={post?.id}  listID={post?.list} />)
                 }))
                 : (<p>You have no published lists</p>)
             }

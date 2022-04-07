@@ -89,7 +89,6 @@ const ListPost = (props) => {
 
     const addComment = async () => {
         if(commentContent !== ""){
-            console.log('hello');
             await addDoc(collection(db, "Post", props.id, "Comments"), {
                 commentContent: commentContent,
                 userID: user.uid
@@ -100,7 +99,6 @@ const ListPost = (props) => {
 
     const getList = async () => {
         const docRef = doc(db, "List", props.listID);
-        console.log('hello');
 
         const docSnap = await getDoc(docRef);
 

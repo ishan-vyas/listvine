@@ -7,7 +7,6 @@ function MyListItem(props) {
     return (
 
         <div className='list-item'>
-            {/* <DeleteIconContainer/> */}
             <div className='clickable-icon'>
                 <DeleteOutline onClick={props.onClick} fontSize='large'/>
             </div>
