@@ -7,7 +7,7 @@ import Button from '../Button';
 import {db} from "../../firebase";
 import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc } from "firebase/firestore";
 import { useAuth } from "../../../context/UserAuthContext";
-import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Share, ShareOutlined, Edit, Send} from '@material-ui/icons';
+import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Edit, Send} from '@material-ui/icons';
 import Confirm from "../Modals/Confirm";
 
 export const UserTag = (props) => {
@@ -147,8 +147,10 @@ const ListPost = (props) => {
         <div className="listpost-container">
             <div className="listpost-content">
                 <div className="members">
-                    <UserTag bg={users[props.userDetails]?.userColor}>{users[props.userDetails]?.username}</UserTag>
-                    <UserTag bg="green">Ishan Vyas</UserTag>
+                    {list?.users.map( (u) => {
+                        return(<UserTag bg={users[u]?.userColor}>{users[u]?.username}</UserTag>);
+                    })}
+                    {/* <UserTag bg={users[props.userDetails]?.userColor}>{users[props.userDetails]?.username}</UserTag> */}
                 </div>
                 <div className="userlist">
                     <h1 className="listpost-title">{list?.title}</h1>

@@ -21,7 +21,6 @@ const MyList = (props) => {
     const [invitation, setInvitation] = useState(false);
     const [listInvitations, setListInvitations] = useState(false);
     const [newItemContent, setNewItemContent] = useState();
-    // const [delItemContent, setDelItemContent] = useState();
     const { user, users } = useAuth(); 
 
     const getInvitations = async () => {
@@ -73,8 +72,11 @@ const MyList = (props) => {
             list: props.listID,
             userID: user.uid
         })
-        .then(() => {
+        .then((docRef) => {
             setPublish(false);
+            // addDoc(docRef, {
+                
+            // });
         })
     }
 
@@ -90,16 +92,6 @@ const MyList = (props) => {
                 setNewItemContent("");
             })
         }
-    }
-
-    const delItemFromList = async () => {
-        // const taskColRef = collection(db, "List", props.id.listID, "Tasks");
-        // await deleteDoc(
-        //     doc(db, taskColRef, /*todo*/ )
-        // )
-        // .then(() => {
-        //     // reload the set of lists
-        // })
     }
 
     return (
@@ -156,7 +148,7 @@ const MyList = (props) => {
 
                 <div>
                     {tasks?.map((task) => {
-                        return (< MyListItem key={task?.id} value={task?.id} text={task?.taskContent} onClick={delItemFromList}/>)
+                        return (< MyListItem key={task?.id} taskID={task?.id} listID={props.listID} text={task?.taskContent} />)
                     })}
                     < MyAddListItem onClick={addItemToList} value={newItemContent} onChange={(e) => setNewItemContent(e.target.value)} />
                 </div>
