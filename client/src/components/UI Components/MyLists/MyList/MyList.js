@@ -21,15 +21,15 @@ const MyList = (props) => {
     const [invitation, setInvitation] = useState(false);
     const [listInvitations, setListInvitations] = useState(false);
     const [newItemContent, setNewItemContent] = useState();
-    // const [delItemContent, setDelItemContent] = useState();
-    const { users } = useAuth(); 
+    const { user, users } = useAuth(); 
 
     const getInvitations = async () => {
         const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
-
+        console.log('hello');
         const querySnapshot = await getDocs(q);
         const tempInvites = [];
         querySnapshot.forEach((doc) => {
+            console.log('hello');
             tempInvites.push({...doc.data(), id:doc.id})
         });
         setListInvitations(tempInvites);
@@ -40,6 +40,7 @@ const MyList = (props) => {
         console.log("useEffect from MyList.");
         const taskCollectionRef = collection(db, "List", props.listID, "Tasks");
         const unsubscribe = onSnapshot(taskCollectionRef, (querySnapshot) => {
+            console.log('hello');
             const tasksTemp = [];
             querySnapshot.forEach((doc) => {
                 tasksTemp.push({...doc.data(), id: doc.id});
@@ -62,9 +63,27 @@ const MyList = (props) => {
         setConfirm(false);
     }
 
+    const publishListHandler = async () => {
+        console.log('hello publishListHandler');
+        
+        const postCollectionRef = collection(db, "Post");
+        addDoc(postCollectionRef, {
+            likeCount: 0,
+            list: props.listID,
+            userID: user.uid
+        })
+        .then((docRef) => {
+            setPublish(false);
+            // addDoc(docRef, {
+                
+            // });
+        })
+    }
+
     const addItemToList = async () => {
         if (newItemContent !== "") {
             const taskColRef = collection(db, "List", props.listID, "Tasks");
+            console.log('hello');
             await addDoc(taskColRef, {
                 taskContent: newItemContent,
                 taskStatus: false,
@@ -75,16 +94,6 @@ const MyList = (props) => {
         }
     }
 
-    const delItemFromList = async () => {
-        // const taskColRef = collection(db, "List", props.id.listID, "Tasks");
-        // await deleteDoc(
-        //     doc(db, taskColRef, /*todo*/ )
-        // )
-        // .then(() => {
-        //     // reload the set of lists
-        // })
-    }
-
     return (
         <>
         {confirm && 
@@ -92,7 +101,7 @@ const MyList = (props) => {
             You are about to delete '{props.title}', it will no longer show up in your 'My Lists' Section.
         </Confirm>}
         {publish && 
-        <Confirm pos={true} confirmHandler={() => setPublish(false)} cancelHandler={() => setPublish(false)} title="Publish List">
+        <Confirm pos={true} confirmHandler={publishListHandler} cancelHandler={() => setPublish(false)} title="Publish List">
             You are about to publish '{props.title}', this means all users of 'listvine' will be to view and clone this list. 
         </Confirm>}
         {member && 
@@ -100,7 +109,7 @@ const MyList = (props) => {
             {props.listUsers.map((u) => {
                 return (
                     <>
-                        <UserTag bg={users[u].userColor}>{users[u].username}</UserTag>
+                        <UserTag key={u} bg={users[u].userColor}>{users[u].username}</UserTag>
                          <br />
                     </>
                 )
@@ -139,7 +148,7 @@ const MyList = (props) => {
 
                 <div>
                     {tasks?.map((task) => {
-                        return (< MyListItem key={task?.id} value={task?.id} text={task?.taskContent} onClick={delItemFromList}/>)
+                        return (< MyListItem key={task?.id} taskID={task?.id} listID={props.listID} text={task?.taskContent} />)
                     })}
                     < MyAddListItem onClick={addItemToList} value={newItemContent} onChange={(e) => setNewItemContent(e.target.value)} />
                 </div>

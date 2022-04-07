@@ -4,7 +4,7 @@ import './TransparentTextInput.css';
 const TransparentTextInput = (props) => {
     return(
         <div>
-            <input class="transparent-input" type={props.type} defaultValue={props.defaultValue}></input>
+            <input value={props.val} onInput={props.onInput} onKeyPress={props.onKeyPress} className="transparent-input" type={props.type} defaultValue={props.defaultValue}></input>
         </div>
     );
 }

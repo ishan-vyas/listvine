@@ -7,7 +7,7 @@ import Button from '../Button';
 import {db} from "../../firebase";
 import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc } from "firebase/firestore";
 import { useAuth } from "../../../context/UserAuthContext";
-import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Share, ShareOutlined, Edit, Send} from '@material-ui/icons';
+import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Edit, Send} from '@material-ui/icons';
 import Confirm from "../Modals/Confirm";
 
 export const UserTag = (props) => {
@@ -63,10 +63,12 @@ const ListPost = (props) => {
     const navigate = useNavigate();
 
     const copyList = async () => {
+        console.log('hello');
         console.log(list);
         console.log(listTasks);
         const copiedListID = "C-"+list.id.substring(0,8)+user.uid.substring(0,10);
         console.log(copiedListID);
+        console.log('hello');
         await setDoc(doc(db, "List", copiedListID), {
             userID: user.uid,
             users: [user.uid],
@@ -74,6 +76,7 @@ const ListPost = (props) => {
             published: false
         }).then(() => {
             listTasks.forEach((t) => {
+            console.log('hello');
                 addDoc(collection(db, "List", copiedListID, "Tasks"), {
                     taskContent: t.taskContent,
                     taskStatus: t.taskStatus
@@ -96,6 +99,7 @@ const ListPost = (props) => {
 
     const getList = async () => {
         const docRef = doc(db, "List", props.listID);
+
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -107,9 +111,12 @@ const ListPost = (props) => {
     };
 
     const getTasks = async () => {
+        console.log('hello');
+
         const querySnapshot = await getDocs(collection(db, "List", props.listID, "Tasks"));
         const tasks = []
         querySnapshot.forEach((doc) => {
+            console.log('hello');
             tasks.push({...doc.data(), id:doc.id});
         });
         setListTasks(tasks);
@@ -120,10 +127,12 @@ const ListPost = (props) => {
         getList();
         getTasks();
         const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
+            console.log('hello');
             const tempComments = [];
-            querySnapshot.forEach((doc) => 
-                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID].username, userColor: users[doc.data().userID].userColor})
-            )
+            querySnapshot.forEach((doc) => { 
+                console.log('hello');
+                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID].username, userColor: users[doc.data().userID].userColor}); 
+            })
             setComments(tempComments);
         });
 
@@ -138,8 +147,10 @@ const ListPost = (props) => {
         <div className="listpost-container">
             <div className="listpost-content">
                 <div className="members">
-                    <UserTag bg={users[props.userDetails]?.userColor}>{users[props.userDetails]?.username}</UserTag>
-                    <UserTag bg="green">Ishan Vyas</UserTag>
+                    {list?.users.map( (u) => {
+                        return(<UserTag bg={users[u]?.userColor}>{users[u]?.username}</UserTag>);
+                    })}
+                    {/* <UserTag bg={users[props.userDetails]?.userColor}>{users[props.userDetails]?.username}</UserTag> */}
                 </div>
                 <div className="userlist">
                     <h1 className="listpost-title">{list?.title}</h1>

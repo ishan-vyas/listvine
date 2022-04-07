@@ -12,7 +12,6 @@ function MyLists() {
     const { user } = useAuth();
 
     useEffect(() => {
-        console.log("useEffect from MyLists.");
         const q = query(listCollectionRef, where("users", "array-contains", user.uid));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const lists = [];
