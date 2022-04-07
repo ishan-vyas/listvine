@@ -22,7 +22,7 @@ const MyList = (props) => {
     const [listInvitations, setListInvitations] = useState(false);
     const [newItemContent, setNewItemContent] = useState();
     // const [delItemContent, setDelItemContent] = useState();
-    const { users } = useAuth(); 
+    const { user, users } = useAuth(); 
 
     const getInvitations = async () => {
         const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
@@ -54,7 +54,6 @@ const MyList = (props) => {
 
     const deleteListHandler = async () => {
         await deleteDoc(doc(db, "List", props.listID)).then(() => {
-            console.log('hello');
             const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
 
             const querySnapshot = getDocs(q);
@@ -63,6 +62,20 @@ const MyList = (props) => {
             });
         });
         setConfirm(false);
+    }
+
+    const publishListHandler = async () => {
+        console.log('hello publishListHandler');
+        
+        const postCollectionRef = collection(db, "Post");
+        addDoc(postCollectionRef, {
+            likeCount: 0,
+            list: props.listID,
+            userID: user.uid
+        })
+        .then(() => {
+            setPublish(false);
+        })
     }
 
     const addItemToList = async () => {
@@ -96,7 +109,7 @@ const MyList = (props) => {
             You are about to delete '{props.title}', it will no longer show up in your 'My Lists' Section.
         </Confirm>}
         {publish && 
-        <Confirm pos={true} confirmHandler={() => setPublish(false)} cancelHandler={() => setPublish(false)} title="Publish List">
+        <Confirm pos={true} confirmHandler={publishListHandler} cancelHandler={() => setPublish(false)} title="Publish List">
             You are about to publish '{props.title}', this means all users of 'listvine' will be to view and clone this list. 
         </Confirm>}
         {member && 
