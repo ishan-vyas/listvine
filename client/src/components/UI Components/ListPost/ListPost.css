@@ -22,6 +22,11 @@
     width:5%
 }
 
+.listitem-container{
+    display: flex;
+    flex-direction: column;
+}
+
 .break {
     flex-basis: 100%;
     height: 0;
@@ -37,6 +42,15 @@
 .comment-section{
     width: 95%;
     text-align: left;
+}
+
+.commentStat-section{
+    display:flex;
+}
+
+.commentItem-section{
+    display:flex;
+    flex-direction: column;
 }
 
 .comment-number{

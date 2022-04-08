@@ -3,9 +3,9 @@ import './MyPublishedList.css';
 import TextInput from '../../TextInputs/TextInput';
 
 import {db} from "../../../firebase";
-import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc } from "firebase/firestore";
+import { query, getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc, deleteDoc, orderBy } from "firebase/firestore";
 import { useAuth } from "../../../../context/UserAuthContext";
-
+import Confirm from '../../Modals/Confirm';
 
 import MyPublishedListItem from './MyPublishedListItem/MyPublishedListItem';
 import { Send, MoreHoriz, MoreVert } from '@material-ui/icons';
@@ -48,6 +48,7 @@ const MyPublishedList = (props) => {
     const [comment, setComment] = useState(false);
     const [comments, setComments] = useState([]);
     const [commentContent, setCommentContent] = useState();
+    const [confirm, setConfirm] = useState(false);
 
     const [list, setList] = useState();
     const [tasks, setTasks] = useState(false);
@@ -87,10 +88,36 @@ const MyPublishedList = (props) => {
 
     };
 
+    const deleteListHandler = async () => {
+
+        const q1 = query(collection(db, "List", props.listID, "Tasks"));
+        const taskSnapshot = await getDocs(q1);
+        taskSnapshot.forEach((t) => {
+            deleteDoc(doc(db, "List", props.listID, "Tasks", t.id));
+        });
+        
+        deleteDoc(doc(db, "List", props.listID))
+        setConfirm(false);
+    }
+
+    const deletePostHandler = async () => {
+
+        const q1 = query(collection(db, "Post", props.postID, "Comments"));
+        const commentSnapshot = await getDocs(q1);
+        commentSnapshot.forEach((c) => {
+            deleteDoc(doc(db, "Post", props.postID, "Comments", c.id));
+        });
+        
+        deleteDoc(doc(db,"Post",props.postID)).then(() => {
+            deleteListHandler();
+        })
+    }
+
     useEffect(() => {
         getList();
         getTasks();
-        const res = onSnapshot(listPost, (querySnapshot) => {
+        const q = query(listPost, orderBy('commentCreated'));
+        const res = onSnapshot(q, (querySnapshot) => {
             const tempComments = [];
             querySnapshot.forEach((doc) => {
                 tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID].username, userColor: users[doc.data().userID].userColor});
@@ -102,8 +129,13 @@ const MyPublishedList = (props) => {
     }, []);
 
     return (
+        <>
+        {confirm && 
+            <Confirm confirmHandler={deletePostHandler} cancelHandler={() => setConfirm(false)} title="Are you sure you want to delete this post?">
+                You are about to delete '{list?.title}', it will no longer show up in your 'My Published Lists' section and will be removed from the Newsfeed.
+            </Confirm>}
         <div className="mypublishedlist">
-
+            
             <div className = 'mypublishedlist-title-section' onClick={() => setListOpen(!listOpen)}>
                 <div className='mypublishedlist-title'>
                     {list?.title}
@@ -113,21 +145,29 @@ const MyPublishedList = (props) => {
                 (<MoreHoriz fontSize="large" style={{marginRight:'0.4em'}}/>)}
             </div>
 
+
             {listOpen && (
             <>
+                <p style={{color:"grey", fontFamily:"Roboto", fontWeight:"100", margin:"0", marginLeft:"1%"}}>Posted on: {props.creation}</p>
+                <div className='mylist-actions'>
+                    <div className='mylist-btn red' onClick={() => {setConfirm(true)}}>Delete</div>
+                </div>
                 <div className="publist-content">
                     {tasks?.map((task) => {
                         return (< MyPublishedListItem text={task.taskContent} />)
                     })}
-
+                </div>
                 <div className="break"></div>
                 <div className='publist-seperator'></div>
                 <div className="break"></div>
 
                 <div className="publist-comment-section">
-                    <p onClick={() => setComment(!comment)} className="publist-comment-number"><u>{comments?.length.toString() +' comments'}</u></p>
+                    <div className="commentStat-section">
+                        <p style={{marginRight:"1%"}}className="comment-number">{props.likeCount +' likes'}</p>
+                        <p onClick={() => setComment(!comment)} className="publist-comment-number"><u>{comments?.length.toString() +' comments'}</u></p>
+                    </div>
                     {comment && (
-                    <>
+                    <div className="commentItem-section">
                         {comments.map((comment) => {
                             return(<CommentItem user={comment.username} bg={comment.userColor}>{comment.commentContent}</CommentItem>);
                         })}
@@ -138,15 +178,12 @@ const MyPublishedList = (props) => {
                                 <Send onClick={addComment} style={{color:'#4285F4', marginLeft:'1%', fontSize:'xx-large'}}/>
                             </div>
                         </div>
-                    </>
+                    </div>
                     )}
                 </div>
-                </div>
-
-
-                
             </>)}
         </div>
+    </>
     );
 }
 
