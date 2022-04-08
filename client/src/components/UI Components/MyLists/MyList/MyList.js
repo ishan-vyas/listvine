@@ -3,7 +3,7 @@ import './MyList.css';
 import MyListItem from './MyListItem/MyListItem';
 import MyAddListItem from './MyListItem/MyAddListItem';
 import { useState, useEffect } from 'react';
-import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc } from 'firebase/firestore';
+import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc, getDoc, FieldPath} from 'firebase/firestore';
 import {db} from "../../../firebase"
 import Confirm from "../../Modals/Confirm";
 import MemberModal from '../../Modals/MemberModal';
@@ -64,20 +64,39 @@ const MyList = (props) => {
     }
 
     const publishListHandler = async () => {
-        console.log('hello publishListHandler');
         
-        const postCollectionRef = collection(db, "Post");
-        addDoc(postCollectionRef, {
-            likeCount: 0,
-            list: props.listID,
-            userID: user.uid
+        const docSnap = await getDoc(doc(db, "List", props.listID));
+        addDoc(collection(db, "Post"), {
+            userID: user.uid,
+            title: docSnap.data().title,
+            users: docSnap.data().users,
+            likeCount: 0
         })
         .then((docRef) => {
+            console.log('hello');
+            const tempTasks = getDocs(collection(db, "List", docRef.id, "Tasks"));
+            tempTasks.forEach((taskDoc) => {
+                addDoc(collection(db, "Post", docRef.id, "Tasks"), {
+                    taskContent: taskDoc.taskContent,
+                    taskStatus: taskDoc.taskStatus
+                });
+            });
+            console.log('hello');
             setPublish(false);
-            // addDoc(docRef, {
+        });
+
+        // const postCollectionRef = collection(db, "Post");
+        // addDoc(postCollectionRef, {
+        //     likeCount: 0,
+        //     list: props.listID,
+        //     userID: user.uid
+        // })
+        // .then((docRef) => {
+        //     setPublish(false);
+        //     // addDoc(docRef, {
                 
-            // });
-        })
+        //     // });
+        // })
     }
 
     const addItemToList = async () => {
