@@ -66,18 +66,16 @@ const ListPost = (props) => {
         console.log('hello');
         console.log(list);
         console.log(listTasks);
-        const copiedListID = "C-"+list.id.substring(0,8)+user.uid.substring(0,10);
-        console.log(copiedListID);
         console.log('hello');
-        await setDoc(doc(db, "List", copiedListID), {
+        await addDoc(collection(db, "List"), {
             userID: user.uid,
             users: [user.uid],
             title: list.title,
             published: false
-        }).then(() => {
+        }).then((docRef) => {
             listTasks.forEach((t) => {
             console.log('hello');
-                addDoc(collection(db, "List", copiedListID, "Tasks"), {
+                addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.taskContent,
                     taskStatus: t.taskStatus
                 })

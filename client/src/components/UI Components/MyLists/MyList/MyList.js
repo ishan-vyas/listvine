@@ -59,6 +59,11 @@ const MyList = (props) => {
             querySnapshot.forEach((doc) => {
                 deleteDoc(doc(db, "Invitation", doc.id));
             });
+
+            // const taskQuerySnapShot = getDocs(collection(db, "List", props.listID, "Tasks"));
+            // taskQuerySnapShot.forEach((doc) => {
+            //     deleteDoc(doc(db, "List", props.listID, "Tasks", doc.id));
+            // });
         });
         setConfirm(false);
     }
