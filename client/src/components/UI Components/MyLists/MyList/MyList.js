@@ -59,11 +59,6 @@ const MyList = (props) => {
             querySnapshot.forEach((doc) => {
                 deleteDoc(doc(db, "Invitation", doc.id));
             });
-
-            // const taskQuerySnapShot = getDocs(collection(db, "List", props.listID, "Tasks"));
-            // taskQuerySnapShot.forEach((doc) => {
-            //     deleteDoc(doc(db, "List", props.listID, "Tasks", doc.id));
-            // });
         });
         setConfirm(false);
     }
@@ -71,7 +66,7 @@ const MyList = (props) => {
     const publishListHandler = async () => {
         
         const docSnap = await getDoc(doc(db, "List", props.listID));
-        addDoc(collection(db, "Post"), {
+        await addDoc(collection(db, "Post"), {
             userID: user.uid,
             title: docSnap.data().title,
             users: docSnap.data().users,
@@ -79,7 +74,7 @@ const MyList = (props) => {
         })
         .then((docRef) => {
             console.log('hello');
-            const tempTasks = getDocs(collection(db, "List", docRef.id, "Tasks"));
+            const tempTasks = getDocs(collection(db, "List", props.listID, "Tasks"));
             tempTasks.forEach((taskDoc) => {
                 addDoc(collection(db, "Post", docRef.id, "Tasks"), {
                     taskContent: taskDoc.taskContent,
