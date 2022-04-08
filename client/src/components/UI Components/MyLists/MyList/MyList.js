@@ -52,51 +52,55 @@ const MyList = (props) => {
     }, []);
 
     const deleteListHandler = async () => {
-        await deleteDoc(doc(db, "List", props.listID)).then(() => {
-            const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
 
-            const querySnapshot = getDocs(q);
-            querySnapshot.forEach((doc) => {
-                deleteDoc(doc(db, "Invitation", doc.id));
-            });
+        const q1 = query(collection(db, "List", props.listID, "Tasks"));
+        const taskSnapshot = await getDocs(q1);
+        taskSnapshot.forEach((t) => {
+            deleteDoc(doc(db, "List", props.listID, "Tasks", t.id));
+        });
+        
+        deleteDoc(doc(db, "List", props.listID)).then(() => {
+            deleteInvitations();
         });
         setConfirm(false);
     }
 
+    const deleteInvitations = async () => {
+        console.log("Deleting invitations now");
+        const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
+        const querySnapshot = await getDocs(q);
+        querySnapshot?.forEach((i) => {
+            console.log("found one");
+            deleteDoc(doc(db, "Invitation", i.id));
+        });
+    }
+
     const publishListHandler = async () => {
         
-        const docSnap = await getDoc(doc(db, "List", props.listID));
-        await addDoc(collection(db, "Post"), {
+        await addDoc(collection(db, "List"), {
             userID: user.uid,
-            title: docSnap.data().title,
-            users: docSnap.data().users,
-            likeCount: 0
-        })
-        .then((docRef) => {
+            users: props.listUsers,
+            title: props.title,
+            listCreated: new Date(),
+            published: true
+        }).then((docRef) => {
+            tasks?.forEach((t) => {
             console.log('hello');
-            const tempTasks = getDocs(collection(db, "List", props.listID, "Tasks"));
-            tempTasks.forEach((taskDoc) => {
-                addDoc(collection(db, "Post", docRef.id, "Tasks"), {
-                    taskContent: taskDoc.taskContent,
-                    taskStatus: taskDoc.taskStatus
-                });
-            });
-            console.log('hello');
-            setPublish(false);
+                addDoc(collection(db, "List", docRef.id, "Tasks"), {
+                    taskContent: t.taskContent,
+                    taskStatus: t.taskStatus
+                })
+            })
+            addDoc(collection(db, "Post"), {
+                likeCount: 0,
+                postCreated: new Date(),
+                list: docRef.id,
+                userID: user.uid
+            })
+            .then(() => {
+                setPublish(false);
+            })
         });
-
-        // const postCollectionRef = collection(db, "Post");
-        // addDoc(postCollectionRef, {
-        //     likeCount: 0,
-        //     list: props.listID,
-        //     userID: user.uid
-        // })
-        // .then((docRef) => {
-        //     setPublish(false);
-        //     // addDoc(docRef, {
-                
-        //     // });
-        // })
     }
 
     const addItemToList = async () => {
@@ -128,7 +132,7 @@ const MyList = (props) => {
             {props.listUsers.map((u) => {
                 return (
                     <>
-                        <UserTag key={u} bg={users[u].userColor}>{users[u].username}</UserTag>
+                        <UserTag bg={users[u].userColor}>{users[u].username}</UserTag>
                          <br />
                     </>
                 )
@@ -158,6 +162,7 @@ const MyList = (props) => {
             </div>
             {listOpen && (
             <>
+                <p style={{color:"grey", fontFamily:"Roboto", fontWeight:"100", margin:"0", marginLeft:"1%"}}>Created on: {props.creation}</p>
                 <div className='mylist-actions'>
                     <div className='mylist-btn blue' onClick={() => {setMember(true)}}>Members</div>
                     <div className='mylist-btn blue' onClick={() => {setInvitation(true)}}>Invitations</div>
@@ -165,9 +170,9 @@ const MyList = (props) => {
                     <div className='mylist-btn red' onClick={() => {setConfirm(true)}}>Delete</div>
                 </div>
 
-                <div>
+                <div className='listitem-div'>
                     {tasks?.map((task) => {
-                        return (< MyListItem key={task?.id} taskID={task?.id} listID={props.listID} text={task?.taskContent} />)
+                        return (< MyListItem taskID={task?.id} listID={props.listID} text={task?.taskContent} />)
                     })}
                     < MyAddListItem onClick={addItemToList} value={newItemContent} onChange={(e) => setNewItemContent(e.target.value)} />
                 </div>

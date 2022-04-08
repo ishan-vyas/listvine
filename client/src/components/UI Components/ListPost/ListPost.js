@@ -5,7 +5,7 @@ import "./ListPost.css";
 import TextInput from '../TextInputs/TextInput';
 import Button from '../Button';
 import {db} from "../../firebase";
-import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc } from "firebase/firestore";
+import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../../context/UserAuthContext";
 import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Edit, Send} from '@material-ui/icons';
 import Confirm from "../Modals/Confirm";
@@ -71,6 +71,7 @@ const ListPost = (props) => {
             userID: user.uid,
             users: [user.uid],
             title: list.title,
+            listCreated: new Date(),
             published: false
         }).then((docRef) => {
             listTasks.forEach((t) => {
@@ -89,6 +90,7 @@ const ListPost = (props) => {
         if(commentContent !== ""){
             await addDoc(collection(db, "Post", props.id, "Comments"), {
                 commentContent: commentContent,
+                commentCreated: new Date(),
                 userID: user.uid
             });
         }
@@ -120,11 +122,26 @@ const ListPost = (props) => {
         setListTasks(tasks);
     };
 
+    const likeHandler = async () => {
+        if(like == false){
+            await setDoc(doc(db, "Post", props.id), {
+                likeCount: props.likeCount+1
+            }, {merge:true});
+            setLike(true);
+        }else{
+            await setDoc(doc(db, "Post", props.id), {
+                likeCount: props.likeCount-1
+            }, {merge:true});
+            setLike(false);  
+        }
+    }
+
     useEffect(() => {
         console.log("useEffect from ListPost.");
         getList();
         getTasks();
-        const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
+        const q = query(listPost, orderBy("commentCreated"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
             console.log('hello');
             const tempComments = [];
             querySnapshot.forEach((doc) => { 
@@ -152,6 +169,7 @@ const ListPost = (props) => {
                 </div>
                 <div className="userlist">
                     <h1 className="listpost-title">{list?.title}</h1>
+                    <p style={{color:"grey", fontFamily:"Roboto", fontWeight:"100", margin:"0", marginLeft:"1%"}}>Posted on: {props.creation}</p>
                     <div className="listitem-container">
                         {listTasks?.map((task) => {
                             return (<ListItem>{task.taskContent}</ListItem>);
@@ -160,7 +178,7 @@ const ListPost = (props) => {
                 </div>  
             </div>
             <div className="listpost-actions">
-                {like ? (<Whatshot onClick={() => setLike(!like)} fontSize="large"/>) : (<WhatshotOutlined onClick={() => setLike(!like)} fontSize="large"/>)}
+                {like ? (<Whatshot onClick={likeHandler} fontSize="large"/>) : (<WhatshotOutlined onClick={likeHandler} fontSize="large"/>)}
                 {comment ? (<Comment onClick={() => setComment(!comment)} fontSize="large"/>) : (<CommentOutlined onClick={() => setComment(!comment)} fontSize="large"/>)}
                 <Edit fontSize="large" onClick={() => setConfirm(true)}/>
             </div>
@@ -168,9 +186,12 @@ const ListPost = (props) => {
             <div className='listpost-seperator'></div>
             <div className="break"></div>
             <div className="comment-section">
-                <p onClick={() => setComment(!comment)} className="comment-number"><u>{comments?.length.toString() +' comments'}</u></p>
+                <div className="commentStat-section">
+                    <p style={{marginRight:"1%"}}className="comment-number">{props.likeCount +' likes'}</p>
+                    <p onClick={() => setComment(!comment)} className="comment-number"><u>{comments?.length.toString() +' comments'}</u></p>   
+                </div>
                 {comment && (
-                <>
+                <div className="commentItem-section">
                     {comments.map((comment) => {
                         return(<CommentItem user={comment.username} bg={comment.userColor}>{comment.commentContent}</CommentItem>);
                     })}
@@ -181,7 +202,7 @@ const ListPost = (props) => {
                             <Send onClick={addComment} style={{color:'#4285F4', marginLeft:'1%', fontSize:'xx-large'}}/>
                         </div>
                     </div>
-                </>
+                </div>
                 )}
             </div>
         </div>

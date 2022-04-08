@@ -30,6 +30,11 @@
     flex-wrap: wrap;
 }
 
+.listitem-div{
+    display: flex;
+    flex-direction: column;
+}
+
 .mylist-btn {
     color: white;
     background-color: black;

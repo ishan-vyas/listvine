@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react';
 import './MyPublishedLists.css';
 import MyPublishedList from './MyPublishedList/MyPublishedList';
 import { db } from '../../firebase';
-import { collection, getDocs, onSnapshot, query, where } from 'firebase/firestore'
+import { collection, getDocs, onSnapshot, query, where, orderBy } from 'firebase/firestore'
 import { useAuth } from '../../../context/UserAuthContext';
 
 function MyPublishedLists() {
@@ -12,7 +12,7 @@ function MyPublishedLists() {
     const { user } = useAuth();
 
     useEffect(() => {
-        const q = query(postCollectionRef, where("userID", "==", user.uid));
+        const q = query(postCollectionRef, where("userID", "==", user.uid), orderBy("postCreated"));
         const res = onSnapshot(q, (querySnapshot) => {
             const posts = [];
             querySnapshot.forEach((doc) => {
@@ -30,7 +30,7 @@ function MyPublishedLists() {
 
             {
                 myPosts ? (myPosts?.map((post) => {
-                    return (< MyPublishedList key={post?.id} postID={post?.id}  listID={post?.list} />)
+                    return (< MyPublishedList likeCount={post?.likeCount} creation={post?.postCreated.toDate().toString()} key={post?.id} postID={post?.id} listID={post?.list} />)
                 }))
                 : (<p>You have no published lists</p>)
             }
