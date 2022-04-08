@@ -7,15 +7,7 @@ import TransparentTextInput from "../../UI Components/TextInputs/TransparentText
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
-import {
-    getDoc,
-    doc,
-    collection,
-    getDocs,
-    onSnapshot,
-    addDoc,
-    setDoc,
-} from "firebase/firestore";
+import {  onSnapshot, collection, doc, getDoc, deleteDoc, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { useAuth } from "../../../context/UserAuthContext";
 
 function NewList() {
@@ -25,9 +17,11 @@ function NewList() {
     const [listID, setListID] = useState("");
     const [addedUsers, setAddedUsers] = useState([]);
     const [collaborator, setCollaborator] = useState("");
+     const [userids, setUserIDs] = useState([]);
 
     const { user, users } = useAuth();
     const navigate = useNavigate();
+    let id = "";
 
     const submitNewList = async () => {
         //
@@ -39,6 +33,9 @@ function NewList() {
             published: false,
         }).then((docRef) => {
             setListID(docRef.id);
+            id = docRef.id;
+            console.log("id is: " + listID);
+            console.log("id is: " + id);
             ListItems.forEach((t) => {
                 //console.log('hello');
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
@@ -46,24 +43,25 @@ function NewList() {
                     taskStatus: false,
                 });
             });
+            inviteUsers();
+       
+            console.log(ListItems);
+            console.log("list created");
+            navigate("/home");
         });
-        inviteUsers();
-        console.log(title);
-        console.log(ListItems);
-        console.log("list created");
-        navigate("/home");
+        
     };
 
     const inviteUsers = async () => {
-        /*await addedUsers.forEach((au) => {
-            addDoc(collection(db, "Invitation"), {
+        userids.forEach( async (au) => {
+            await addDoc(collection(db, "Invitation"), {
             fromUser: user.uid,
-            list: listID,
+            list: id,
             toUser: au,
             })
-        });*/
+        });
         console.log("invited Users");
-        console.log(addedUsers);
+        console.log(listID);
     };
 
     const handleKeyPress = (event) => {
@@ -78,14 +76,17 @@ function NewList() {
 
     const removeItem = (event) => {};
 
-    const handleKeyPressUsers = (event) => {
-       /* if ("is valid user") {
-            console.log(collaborator);
-            //console.log(ListItems);
-            setAddedUsers([...addedUsers, collaborator]);
-            //setItem(input);
-            console.log(addedUsers);
-        }*/
+    const handleKeyPressUsers = async () => {
+        const querySnapshot = await getDocs(collection(db, "User"));
+        querySnapshot.forEach((doc) => {
+            console.log("inside hadleuser");
+            console.log(doc.data());
+            if(doc.data().username == collaborator){
+                console.log("invited" + collaborator + " to list");
+                 setAddedUsers([...addedUsers, collaborator]);
+                 setUserIDs([...userids, doc.id]);
+            }
+        });
     };
 
     const ListItem = (props) => {

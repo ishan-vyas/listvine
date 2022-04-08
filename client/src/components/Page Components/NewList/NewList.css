@@ -1,3 +1,4 @@
+
 .main-newlist-div{
     display: flex;
     flex-direction: column;
@@ -68,6 +69,7 @@
     margin: 2%;
     margin-bottom: 0;
     text-align: center;
+    cursor: pointer;
 }
 
 .user-section{
@@ -104,5 +106,5 @@
 }
 
 .close-button{
-
+    cursor: pointer;
     }
