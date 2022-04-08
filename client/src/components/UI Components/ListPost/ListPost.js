@@ -50,10 +50,9 @@ const CommentItem = (props) => {
 }
 
 const ListPost = (props) => {
-
-    const [like, setLike] = useState(false);
     const [comment, setComment] = useState(false);
     const { user, users } = useAuth();
+    const [like, setLike] = useState(props.likeList.includes(user.uid));
     const [list, setList] = useState();
     const [listTasks, setListTasks] = useState();
     const [comments, setComments] = useState();
@@ -125,12 +124,13 @@ const ListPost = (props) => {
     const likeHandler = async () => {
         if(like == false){
             await setDoc(doc(db, "Post", props.id), {
-                likeCount: props.likeCount+1
+                userLikes: [...props.likeList, user.uid]
             }, {merge:true});
             setLike(true);
         }else{
+            const newLikeList = props.likeList.filter((u) => u !== user.uid);
             await setDoc(doc(db, "Post", props.id), {
-                likeCount: props.likeCount-1
+                userLikes: [...newLikeList]
             }, {merge:true});
             setLike(false);  
         }
@@ -187,7 +187,7 @@ const ListPost = (props) => {
             <div className="break"></div>
             <div className="comment-section">
                 <div className="commentStat-section">
-                    <p style={{marginRight:"1%"}}className="comment-number">{props.likeCount +' likes'}</p>
+                    <p style={{marginRight:"1%"}}className="comment-number">{props.likeList?.length +' likes'}</p>
                     <p onClick={() => setComment(!comment)} className="comment-number"><u>{comments?.length.toString() +' comments'}</u></p>   
                 </div>
                 {comment && (

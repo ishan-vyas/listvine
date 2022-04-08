@@ -163,7 +163,7 @@ const MyPublishedList = (props) => {
 
                 <div className="publist-comment-section">
                     <div className="commentStat-section">
-                        <p style={{marginRight:"1%"}}className="comment-number">{props.likeCount +' likes'}</p>
+                        <p style={{marginRight:"1%"}}className="comment-number">{props.likeList?.length +' likes'}</p>
                         <p onClick={() => setComment(!comment)} className="publist-comment-number"><u>{comments?.length.toString() +' comments'}</u></p>
                     </div>
                     {comment && (

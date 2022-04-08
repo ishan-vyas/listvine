@@ -37,7 +37,7 @@ function Newsfeed(){
                 </div>
                 <div className="livelist-div">
                     {posts?.map((post) => {
-                        return (<ListPost creation={post?.postCreated.toDate().toString()} key={post?.id} userDetails={post?.userID} likeCount={post?.likeCount} id={post?.id} listID={post?.list}/>)
+                        return (<ListPost creation={post?.postCreated.toDate().toString()} key={post?.id} userDetails={post?.userID} likeList={post?.userLikes} id={post?.id} listID={post?.list}/>)
                     })}
                 </div>
                 <ActionBar style={{width:'15%', height: '50vh'}} />
