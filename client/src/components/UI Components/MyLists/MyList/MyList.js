@@ -95,7 +95,8 @@ const MyList = (props) => {
                 likeCount: 0,
                 postCreated: new Date(),
                 list: docRef.id,
-                userID: user.uid
+                userID: user.uid,
+                userLikes: []
             })
             .then(() => {
                 setPublish(false);
