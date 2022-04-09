@@ -1,0 +1,103 @@
+.main-invitations-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100vh;
+    background-color: #EDEFF2;
+}
+
+.invitations-div{
+    display: flex;
+    margin-top: 1%;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+
+#invitations-title{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    margin: 2%;
+}
+
+.friends-div{
+    width: 80%;
+    height: 90vh;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.invites-list{
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+
+}
+
+.invite-div{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top:1%;
+    margin-bottom: 1%;
+    background-color: #EDEFF2;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.Inviter-div{
+    width: 100%;
+    padding:1%;
+    padding-right: 0;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+}.Inviter-div 
+
+.list-info-section{
+    margin-left: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.list-info-section > p {
+    padding:0;
+    margin:0;
+    margin-top:3%;
+    margin-bottom:3%;
+}
+
+.accept-reject-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 10%;
+
+}
+
+.accept-reject-section > p{
+    margin:0;
+    padding: 0;
+}
+
+.view-list-button, .accept-button{
+    text-decoration: underline;
+}
+

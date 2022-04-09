@@ -7,7 +7,7 @@ import MyLists from "../../UI Components/MyLists/MyLists";
 import MyPublishedLists from "../../UI Components/MyPublishedLists/MyPublishedLists";
 
 function Home(){
-
+    console.log("hi")
     const { getUsers } = useAuth();
     useEffect( () => {
         getUsers();
