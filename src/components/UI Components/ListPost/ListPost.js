@@ -131,6 +131,7 @@ const ListPost = (props) => {
     useEffect(() => {
         getList();
         getTasks();
+        const q = query(listPost, orderBy("commentCreated"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const tempComments = [];
             querySnapshot.forEach((doc) => { 
