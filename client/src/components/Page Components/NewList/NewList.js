@@ -10,11 +10,11 @@ import { db } from "../../firebase";
 import {  onSnapshot, collection, doc, getDoc, deleteDoc, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { useAuth } from "../../../context/UserAuthContext";
 
-export const CreateNewList = () => {
+export const CreateNewList = (props) => {
 
     const [ListItems, setListItems] = useState([]);
-    const [input, setInput] = useState("Enter an Item....");
-    const [title, setTitle] = useState("Enter a Title..");
+    const [input, setInput] = useState("");
+    const [title, setTitle] = useState("");
     const [listID, setListID] = useState("");
     const [addedUsers, setAddedUsers] = useState([]);
     const [collaborator, setCollaborator] = useState("");
@@ -63,6 +63,7 @@ export const CreateNewList = () => {
             fromUser: user.uid,
             list: id,
             toUser: au,
+            invitationCreated: new Date()
             })
         });
         console.log("invited Users");
@@ -76,6 +77,7 @@ export const CreateNewList = () => {
             setListItems([...ListItems, {id:currentItemID, content:input}]);
             //setItem(input);
             setCurrentItemID(currentItemID+1);
+            setInput("");
         }
     };
 
@@ -105,67 +107,84 @@ export const CreateNewList = () => {
             console.log(doc.data());
             if(doc.data().username == collaborator){
                 console.log("invited" + collaborator + " to list");
-                 setAddedUsers([...addedUsers, {id:currentUserItemID, content:collaborator, userID: doc.id}]);
+                 setAddedUsers([...addedUsers, {id:currentUserItemID, content:collaborator, userID: doc.id, userColor: users[doc.id].userColor}]);
                  setUserIDs([...userids, doc.id]);
                  setCurrentUserItemID(currentUserItemID+1);
             }
+            setCollaborator("");
         });
     };
 
     const ListItem = (props) => {
         return (
             <div className="listedItem">
-                <p className="item-text">{props.text}</p>
-                <p onClick={(e) => removeItem(props.object, props.type)} className="close-button">
-                    X
-                </p>
+                <div className="listitem-content">
+                    <div className="check-container" style={{backgroundColor:props.bg, flexBasis:"auto", flexShrink:"0"}}>
+                        <div className="circular-check">
+                        </div>
+                    </div>
+                    <p className="item-text" style={{flexBasis:"auto", flexShrink:"0"}}>{props.text}</p>
+                </div>
+                <div className="listitem-action">
+                    <p onClick={(e) => removeItem(props.object, props.type)} className="close-button">
+                        X
+                    </p>
+                </div>
             </div>
         );
     };
 
     return(
-        <div className="create-div">
-            <div className="header-section">
-                <h1 id="newlist-title">Create New List</h1>
-            </div>
-            <div className="list-section">
-                <TransparentTextInput
-                    onInput={(e) => setTitle(e.target.value)}
-                    defaultValue="Add Title ..."
-                />
-                <div className="listitem-section">
-                    <div className="added-items-container">
+        <div className="newlist-component-div">
+            <div className="creating-div" style={{overflowY:"scroll"}}>
+                {props.quicklist ? <></> : <div className="header-section">
+                    <h1 style={{fontSize:props.fontSize}} id="newlist-title">Create New List</h1>
+                </div>}
+                <div className="list-section">
+                    <h2 style={{fontFamily:"Roboto"}}>List Title</h2>
+                    <TransparentTextInput
+                        onInput={(e) => setTitle(e.target.value)}
+                        defaultValue="Add Title ..."
+                        val={title}
+                    />
+                    <div className="listitem-section">
+                        <h2 style={{fontFamily:"Roboto"}}>List Items</h2>
+                        <div className="added-items-container">
+                            <>
+                                {ListItems?.map((item) => {
+                                    return (
+                                        <ListItem bg="#EDEFF2" type="item" object={item} key={item.id} id={item.id} text={item.content}></ListItem>
+                                    );
+                                })}
+                            </>
+                            <TransparentTextInput
+                                onInput={(e) => setInput(e.target.value)}
+                                onKeyPress={(e) =>
+                                    e.key === "Enter" && handleKeyPress()
+                                }
+                                defaultValue="Enter a item..."
+                                val={input}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="user-section">
+                    <div className="users-container">
+                        <h2 style={{fontFamily:"Roboto"}}>Users</h2>
                         <>
-                            {ListItems?.map((item) => {
-                                return (
-                                    <ListItem type="item" object={item} key={item.id} id={item.id} text={item.content}></ListItem>
-                                );
+                            {addedUsers.map((user) => {
+                                return <ListItem bg={user.userColor} type="user" object={user} key={user.id} id={user.id} text={user.content}></ListItem>;
                             })}
                         </>
                         <TransparentTextInput
-                            onInput={(e) => setInput(e.target.value)}
+                            onInput={(e) => setCollaborator(e.target.value)}
                             onKeyPress={(e) =>
-                                e.key === "Enter" && handleKeyPress()
+                                e.key === "Enter" && handleKeyPressUsers()
                             }
-                            defaultValue="Enter a item..."
+                            defaultValue="Add User ..."
+                            val={collaborator}
                         />
                     </div>
-                </div>
-            </div>
-            <div className="user-section">
-                <div className="users-container">
-                    <>
-                        {addedUsers.map((user) => {
-                            return <ListItem type="user" object={user} key={user.id} id={user.id} text={user.content}></ListItem>;
-                        })}
-                    </>
-                    <TransparentTextInput
-                        onInput={(e) => setCollaborator(e.target.value)}
-                        onKeyPress={(e) =>
-                            e.key === "Enter" && handleKeyPressUsers()
-                        }
-                        defaultValue="Add User ..."
-                    />
                 </div>
             </div>
             <div className="button-section">
@@ -184,7 +203,9 @@ function NewList() {
         <div className="main-newlist-div">
             <Navbar>Ishan Vyas</Navbar>
             <div className="newlist-div">
-                <CreateNewList />
+                <div className="create-div">
+                    <CreateNewList quicklist={false}/>
+                </div>
                 <ActionBar style={{ width: "15%", height: "50vh" }} />
             </div>
         </div>

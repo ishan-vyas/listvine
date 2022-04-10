@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {auth} from '../components/firebase';
+import { auth } from '../components/firebase';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { db } from '../components/firebase';
 import { doc, setDoc, deleteDoc, getDoc, getDocs, collection} from 'firebase/firestore';
@@ -42,7 +42,9 @@ export function UserAuthContextProvider({children}){
     const changeUsernameDB = async (newUsername) => {
         await setDoc(doc(db, "User", auth.currentUser.uid), {
             username: newUsername,
-        }, {merge : true});
+        }, {merge : true}).then(() => {
+            auth.currentUser.reload();
+        });
     }
 
     const deleteUserDB = async () => {

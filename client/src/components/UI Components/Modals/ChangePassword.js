@@ -1,7 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import Button from '../Button';
 import TextInput from '../TextInputs/TextInput';
-import { useAuth } from '../../../context/UserAuthContext';
 
 import './ChangePassword.css';
 
