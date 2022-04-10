@@ -19,7 +19,6 @@ function MyPublishedLists() {
                 posts.push({ ...doc.data(), id: doc.id });
             })
             setMyPosts(posts);
-            console.log(posts);
         })
         return res;
     }, []);

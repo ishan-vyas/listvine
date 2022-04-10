@@ -16,10 +16,8 @@ function MyListItem(props) {
     }
 
     useEffect(() => {
-        console.log('hello useeffect');
         const unsubscribe = onSnapshot(doc(db, 'List', props.listID, 'Tasks', props.taskID), (doc) => {
             let tempStatus = false;
-            console.log(doc.data());
 
             tempStatus = doc.data().taskStatus;
             setStatus(tempStatus);

@@ -19,7 +19,6 @@ function SignUp(){
 
     useEffect(() => {
         setError("");
-        console.log("useEffect from signUP");
     },[username, email, password]);
 
     const signUpHandler = async (e) => {

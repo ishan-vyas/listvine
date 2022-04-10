@@ -61,10 +61,6 @@ const ListPost = (props) => {
     const navigate = useNavigate();
 
     const copyList = async () => {
-        console.log('hello');
-        console.log(list);
-        console.log(listTasks);
-        console.log('hello');
         await addDoc(collection(db, "List"), {
             userID: user.uid,
             users: [user.uid],
@@ -73,7 +69,6 @@ const ListPost = (props) => {
             published: false
         }).then((docRef) => {
             listTasks.forEach((t) => {
-            console.log('hello');
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.taskContent,
                     taskStatus: t.taskStatus
@@ -109,12 +104,10 @@ const ListPost = (props) => {
     };
 
     const getTasks = async () => {
-        console.log('hello');
 
         const querySnapshot = await getDocs(collection(db, "List", props.listID, "Tasks"));
         const tasks = []
         querySnapshot.forEach((doc) => {
-            console.log('hello');
             tasks.push({...doc.data(), id:doc.id});
         });
         setListTasks(tasks);
@@ -136,15 +129,11 @@ const ListPost = (props) => {
     }
 
     useEffect(() => {
-        console.log("useEffect from ListPost.");
         getList();
         getTasks();
-        const q = query(listPost, orderBy("commentCreated"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            console.log('hello');
             const tempComments = [];
             querySnapshot.forEach((doc) => { 
-                console.log('hello');
                 tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID] ? users[doc.data().userID]?.username : "deletedAccount", userColor: users[doc.data().userID] ? users[doc.data().userID]?.userColor : "black"}); 
             })
             setComments(tempComments);

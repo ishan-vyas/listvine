@@ -17,7 +17,6 @@ function Newsfeed(){
     const listPost = query(collection(db, 'Post'), orderBy('postCreated','desc'));
 
     useEffect(() => {
-        console.log("useEffect from Newsfeed.");
         const unsubscribe = onSnapshot(listPost, (querySnapshot) => {
             const tempPosts = [];
             querySnapshot.forEach((doc) => {

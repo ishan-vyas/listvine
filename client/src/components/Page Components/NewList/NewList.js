@@ -39,19 +39,13 @@ export const CreateNewList = (props) => {
         }).then((docRef) => {
             setListID(docRef.id);
             id = docRef.id;
-            console.log("id is: " + listID);
-            console.log("id is: " + id);
             ListItems.forEach((t) => {
-                //console.log('hello');
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.content,
                     taskStatus: false,
                 });
             });
             inviteUsers();
-       
-            console.log(ListItems);
-            console.log("list created");
             navigate("/home");
         });
         
@@ -66,14 +60,10 @@ export const CreateNewList = (props) => {
             invitationCreated: new Date()
             })
         });
-        console.log("invited Users");
-        console.log(listID);
     };
 
     const handleKeyPress = (event) => {
         if (input.length > 0) {
-            console.log(input);
-            //console.log(ListItems);
             setListItems([...ListItems, {id:currentItemID, content:input}]);
             //setItem(input);
             setCurrentItemID(currentItemID+1);
@@ -82,20 +72,14 @@ export const CreateNewList = (props) => {
     };
 
     const removeItem = (object, type) => {
-        console.log(object);
         if(type == "user"){
-            console.log("This is added Users:", addedUsers);
-            console.log("This is userids", userids);
             const newList = addedUsers.filter((item) => item.id !== object.id);
-            console.log("This is the new List", newList);
             setAddedUsers(newList);
 
             const newUserIds = userids.filter((item) => item !== object.userID);
-            console.log("This is the new List", newUserIds);
             setUserIDs(newUserIds);
         }else if(type == "item"){
             const newList = ListItems.filter((item) => item.id !== object.id);
-            console.log("This is the new List", newList);
             setListItems(newList);
         }
     };
@@ -103,10 +87,7 @@ export const CreateNewList = (props) => {
     const handleKeyPressUsers = async () => {
         const querySnapshot = await getDocs(collection(db, "User"));
         querySnapshot.forEach((doc) => {
-            console.log("inside hadleuser");
-            console.log(doc.data());
             if(doc.data().username == collaborator){
-                console.log("invited" + collaborator + " to list");
                  setAddedUsers([...addedUsers, {id:currentUserItemID, content:collaborator, userID: doc.id, userColor: users[doc.id].userColor}]);
                  setUserIDs([...userids, doc.id]);
                  setCurrentUserItemID(currentUserItemID+1);

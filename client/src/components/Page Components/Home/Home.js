@@ -9,7 +9,6 @@ import { db } from "../../firebase";
 import {collection, onSnapshot} from "firebase/firestore";
 
 function Home(){
-    console.log("hi")
     const { getUsers } = useAuth();
     useEffect( () => {
         const q = collection(db, "User");
