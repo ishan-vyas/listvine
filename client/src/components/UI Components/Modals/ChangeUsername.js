@@ -13,7 +13,6 @@ const ChangeUsername = (props) => {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        console.log('hello');
         setError("");
     },[password, newUsername]);
 

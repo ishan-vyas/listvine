@@ -35,7 +35,7 @@ function Invitations(props){
 
     useEffect(() => {
         getList();
-        console.log("useEffect from Invitation.");
+
         const q = query(invitationRef, where('toUser', '==', user.uid), orderBy('invitationCreated'));
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {

@@ -25,11 +25,9 @@ const MyList = (props) => {
 
     const getInvitations = async () => {
         const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
-        console.log('hello');
         const querySnapshot = await getDocs(q);
         const tempInvites = [];
         querySnapshot.forEach((doc) => {
-            console.log('hello');
             tempInvites.push({...doc.data(), id:doc.id})
         });
         setListInvitations(tempInvites);
@@ -37,10 +35,8 @@ const MyList = (props) => {
 
     useEffect(() => {
         getInvitations();
-        console.log("useEffect from MyList.");
         const taskCollectionRef = collection(db, "List", props.listID, "Tasks");
         const unsubscribe = onSnapshot(taskCollectionRef, (querySnapshot) => {
-            console.log('hello');
             const tasksTemp = [];
             querySnapshot.forEach((doc) => {
                 tasksTemp.push({...doc.data(), id: doc.id});
@@ -66,11 +62,9 @@ const MyList = (props) => {
     }
 
     const deleteInvitations = async () => {
-        console.log("Deleting invitations now");
         const q = query(collection(db, "Invitation"), where("list", "==", props.listID));
         const querySnapshot = await getDocs(q);
         querySnapshot?.forEach((i) => {
-            console.log("found one");
             deleteDoc(doc(db, "Invitation", i.id));
         });
     }
@@ -85,7 +79,6 @@ const MyList = (props) => {
             published: true
         }).then((docRef) => {
             tasks?.forEach((t) => {
-            console.log('hello');
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.taskContent,
                     taskStatus: t.taskStatus
@@ -107,7 +100,6 @@ const MyList = (props) => {
     const addItemToList = async () => {
         if (newItemContent !== "") {
             const taskColRef = collection(db, "List", props.listID, "Tasks");
-            console.log('hello');
             await addDoc(taskColRef, {
                 taskContent: newItemContent,
                 taskStatus: false,

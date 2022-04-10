@@ -27,7 +27,6 @@ function Settings(){
 
     const changePasswordHandler = async (oldPassword, newPassword) => {
         try {
-            console.log("This is from settings:", oldPassword);
             await reauthenticateUser(oldPassword);
             try {
                 await changePassword(newPassword);

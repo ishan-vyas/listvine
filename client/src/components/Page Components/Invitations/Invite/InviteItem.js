@@ -32,7 +32,6 @@ const InviteItem = (props) => {
     
     useEffect(() => {
         getTasks();
-        console.log("useEffect from Invitation.");
         const docRef = doc(db, "List", props.listID);
         const unsubscribe = onSnapshot(docRef, (doc) => {
             setInvitationList({...doc.data(), id:doc.id});
@@ -56,11 +55,6 @@ const InviteItem = (props) => {
         await deleteDoc(doc(db, 'Invitation', props.id));
         setDeny(false);
     }
-
-
-    
-    // console.log(props.listID);
-    //console.log(list[props.listID].title);
     
     return(
         <>
