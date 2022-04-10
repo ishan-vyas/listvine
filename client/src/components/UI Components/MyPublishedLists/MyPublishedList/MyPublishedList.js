@@ -120,7 +120,7 @@ const MyPublishedList = (props) => {
         const res = onSnapshot(q, (querySnapshot) => {
             const tempComments = [];
             querySnapshot.forEach((doc) => {
-                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID].username, userColor: users[doc.data().userID].userColor});
+                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID] ? users[doc.data().userID]?.username : "deletedAccount", userColor: users[doc.data().userID] ? users[doc.data().userID]?.userColor : "black"});
             })
             setComments(tempComments);
         });
