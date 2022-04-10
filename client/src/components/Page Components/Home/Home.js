@@ -5,12 +5,18 @@ import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import { useAuth } from "../../../context/UserAuthContext";
 import MyLists from "../../UI Components/MyLists/MyLists";
 import MyPublishedLists from "../../UI Components/MyPublishedLists/MyPublishedLists";
+import { db } from "../../firebase";
+import {collection, onSnapshot} from "firebase/firestore";
 
 function Home(){
     console.log("hi")
     const { getUsers } = useAuth();
     useEffect( () => {
-        getUsers();
+        const q = collection(db, "User");
+        const unsubscribe = onSnapshot(q, () => {
+            getUsers();
+        });
+        return unsubscribe;
     },
     []);
 

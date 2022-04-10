@@ -3,11 +3,11 @@ import './MyPublishedList.css';
 import TextInput from '../../TextInputs/TextInput';
 
 import {db} from "../../../firebase";
-import { query, getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc, deleteDoc, orderBy } from "firebase/firestore";
+import { query, getDoc, doc, collection, getDocs, onSnapshot, addDoc, deleteDoc, orderBy } from "firebase/firestore";
 import { useAuth } from "../../../../context/UserAuthContext";
 import Confirm from '../../Modals/Confirm';
 
-import MyPublishedListItem from './MyPublishedListItem/MyPublishedListItem';
+import { ListItem } from '../../ListPost/ListPost';
 import { Send, MoreHoriz, MoreVert } from '@material-ui/icons';
 
 // export const UserTag = (props) => {
@@ -154,15 +154,15 @@ const MyPublishedList = (props) => {
                 </div>
                 <div className="publist-content">
                     {tasks?.map((task) => {
-                        return (< MyPublishedListItem text={task.taskContent} />)
+                        return (<ListItem bg="white">{task.taskContent}</ListItem>)
                     })}
                 </div>
                 <div className="break"></div>
-                <div className='publist-seperator'></div>
+                <div className='publist-seperator' style={{alignSelf:"center"}}></div>
                 <div className="break"></div>
 
                 <div className="publist-comment-section">
-                    <div className="commentStat-section">
+                    <div className="commentStat-section" style={{marginBottom:"1%"}}>
                         <p style={{marginRight:"1%"}}className="comment-number">{props.likeList?.length +' likes'}</p>
                         <p onClick={() => setComment(!comment)} className="publist-comment-number"><u>{comments?.length.toString() +' comments'}</u></p>
                     </div>

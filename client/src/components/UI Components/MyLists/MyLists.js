@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './MyLists.css';
 import MyList from './MyList/MyList';
 import { db } from '../../firebase';
-import { collection, getDocs, onSnapshot, query, where, orderBy } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, orderBy } from 'firebase/firestore';
 import { useAuth } from "../../../context/UserAuthContext";
 
 function MyLists() {

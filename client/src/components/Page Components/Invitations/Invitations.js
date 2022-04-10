@@ -3,21 +3,18 @@ import './Invitations.css';
 import Navbar from "../../UI Components/Navbar/Navbar";
 import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import { Close } from "@material-ui/icons";
-import { collection, onSnapshot, query, where, doc, getDoc, setDoc, arrayUnion,updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, onSnapshot, query, where, doc, getDoc, setDoc, arrayUnion,updateDoc, deleteDoc, orderBy } from "firebase/firestore";
 import { UserTag } from "../../UI Components/ListPost/ListPost";
 import { db } from "../../firebase";
 import { useAuth } from "../../../context/UserAuthContext";
 import { async, map } from "@firebase/util";
 import InviteItem from "./Invite/InviteItem";
 
-
-
-
 function Invitations(props){
     const [list, setList] = useState();
     const { user, users } = useAuth(); 
     const invitationRef = collection(db, 'Invitation');
-    const [invitation, setInvitation] = useState();
+    const [invitations, setInvitations] = useState([]);
     const [view, setView] = useState(false);
     const [accept, setAccept] = useState(false);
     const [deny, setDeny] = useState(false);
@@ -39,43 +36,32 @@ function Invitations(props){
     useEffect(() => {
         getList();
         console.log("useEffect from Invitation.");
-        const q = query(invitationRef, where('toUser', '==', user.uid));
-
+        const q = query(invitationRef, where('toUser', '==', user.uid), orderBy('invitationCreated'));
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const tempInvites = [];
-            const tempList = [];
             querySnapshot.forEach((doc) => {
                 tempInvites.push({...doc.data(), id: doc.id});
             });
-            setInvitation(tempInvites);
+            setInvitations(tempInvites);
         });
 
         return unsubscribe;
     }, []);
-
-
-
-    const viewList = (e) => {}
-
-
-    const acceptInvite = (e) => {}
-
-
-    const rejectInvite = (e) => {}
 
     
     return(
         <div className="main-invitations-div">
             <Navbar />
             <div className="invitations-div">
-                <div className="friends-div">
+                <div className="friends-div" style={{overflowY:"scroll"}}>
                     <div className="header">
                         <h1 id="invitations-title">Invitations</h1>
                     </div>
                     <div className="invites-list">
-                        {invitation ? (invitation?.map((invite) => {
-                            return <InviteItem toUser={invite?.toUser} listID={invite?.list} key={invite?.key} fromUser={invite?.fromUser} id={invite?.id}/>
+                        {invitations?.length===0 ? <h3 style={{marginLeft:"5%", fontFamily:"Roboto"}}>You have no pending invitations.</h3> : <></>}
+                        {invitations ? (invitations?.map((invite) => {
+                            return <InviteItem toUser={invite?.toUser} listID={invite?.list} key={invite?.id} fromUser={invite?.fromUser} id={invite?.id}/>
                         })) : (<p>You have no invitation</p>)}
                     </div>
                 </div>

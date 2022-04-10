@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ListPost.css";
 import TextInput from '../TextInputs/TextInput';
-import Button from '../Button';
 import {db} from "../../firebase";
 import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../../context/UserAuthContext";
@@ -22,7 +21,7 @@ export const UserTag = (props) => {
     );
 }
 
-const ListItem = (props) => {
+export const ListItem = (props) => {
     return (
         <div className="list-item">
             <div className="check-container" style={{backgroundColor:props.bg}}>
@@ -52,7 +51,7 @@ const CommentItem = (props) => {
 const ListPost = (props) => {
     const [comment, setComment] = useState(false);
     const { user, users } = useAuth();
-    const [like, setLike] = useState(props.likeList.includes(user.uid));
+    const [like, setLike] = useState(props.likeList?.includes(user.uid));
     const [list, setList] = useState();
     const [listTasks, setListTasks] = useState();
     const [comments, setComments] = useState();
@@ -122,7 +121,7 @@ const ListPost = (props) => {
     };
 
     const likeHandler = async () => {
-        if(like == false){
+        if(like === false){
             await setDoc(doc(db, "Post", props.id), {
                 userLikes: [...props.likeList, user.uid]
             }, {merge:true});
@@ -146,7 +145,7 @@ const ListPost = (props) => {
             const tempComments = [];
             querySnapshot.forEach((doc) => { 
                 console.log('hello');
-                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID].username, userColor: users[doc.data().userID].userColor}); 
+                tempComments.push({...doc.data(), id:doc.id, username:users[doc.data().userID] ? users[doc.data().userID]?.username : "deletedAccount", userColor: users[doc.data().userID] ? users[doc.data().userID]?.userColor : "black"}); 
             })
             setComments(tempComments);
         });
@@ -163,7 +162,7 @@ const ListPost = (props) => {
             <div className="listpost-content">
                 <div className="members">
                     {list?.users.map( (u) => {
-                        return(<UserTag bg={users[u]?.userColor}>{users[u]?.username}</UserTag>);
+                        return(<UserTag bg={users[u] ? users[u]?.userColor : "black"}>{users[u] ? users[u]?.username : "deletedAccount"}</UserTag>);
                     })}
                     {/* <UserTag bg={users[props.userDetails]?.userColor}>{users[props.userDetails]?.username}</UserTag> */}
                 </div>
@@ -178,8 +177,8 @@ const ListPost = (props) => {
                 </div>  
             </div>
             <div className="listpost-actions">
-                {like ? (<Whatshot onClick={likeHandler} fontSize="large"/>) : (<WhatshotOutlined onClick={likeHandler} fontSize="large"/>)}
-                {comment ? (<Comment onClick={() => setComment(!comment)} fontSize="large"/>) : (<CommentOutlined onClick={() => setComment(!comment)} fontSize="large"/>)}
+                {like ? (<Whatshot style={{color:"orange"}} onClick={likeHandler} fontSize="large"/>) : (<WhatshotOutlined onClick={likeHandler} fontSize="large"/>)}
+                {comment ? (<Comment style={{color:"#4285F4"}} onClick={() => setComment(!comment)} fontSize="large"/>) : (<CommentOutlined onClick={() => setComment(!comment)} fontSize="large"/>)}
                 <Edit fontSize="large" onClick={() => setConfirm(true)}/>
             </div>
             <div className="break"></div>

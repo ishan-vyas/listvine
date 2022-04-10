@@ -5,7 +5,8 @@ import ActionBar from "../../UI Components/ActionBar/ActionBar";
 import ListPost from "../../UI Components/ListPost/ListPost";
 import TransparentTextInput from "../../UI Components/TextInputs/TransparentTextInput";
 import Button from "../../UI Components/Button";
-import { collection, onSnapshot } from "firebase/firestore";
+import { CreateOutlined } from "@material-ui/icons";
+import { collection, onSnapshot, orderBy, where, query } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import {CreateNewList} from '../NewList/NewList';
@@ -13,7 +14,7 @@ import {CreateNewList} from '../NewList/NewList';
 function Newsfeed(){
 
     const [posts, setPosts] = useState();
-    const listPost = collection(db, 'Post');
+    const listPost = query(collection(db, 'Post'), orderBy('postCreated','desc'));
 
     useEffect(() => {
         console.log("useEffect from Newsfeed.");
@@ -32,8 +33,12 @@ function Newsfeed(){
         <div className="main-newsfeed-div">
             <Navbar />
             <div className="newsfeed-div">
-                 <div className="quicklist-div">
-                    <CreateNewList />
+                 <div className="quicklist-div" style={{alignItems:"center", overflowY:"scroll"}}>
+                    <div style={{display:'flex', alignItems:"center"}}>
+                        <CreateOutlined fontSize="large"/>
+                        <h2 style={{fontFamily:"Roboto"}}>Quick List</h2>
+                    </div>
+                    <CreateNewList quicklist={true} fontSize="150%"/>
                 </div>
                 <div className="livelist-div">
                     {posts?.map((post) => {

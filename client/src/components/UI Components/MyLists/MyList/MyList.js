@@ -3,7 +3,7 @@ import './MyList.css';
 import MyListItem from './MyListItem/MyListItem';
 import MyAddListItem from './MyListItem/MyAddListItem';
 import { useState, useEffect } from 'react';
-import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc, getDoc, FieldPath} from 'firebase/firestore';
+import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc} from 'firebase/firestore';
 import {db} from "../../../firebase"
 import Confirm from "../../Modals/Confirm";
 import MemberModal from '../../Modals/MemberModal';
@@ -133,7 +133,7 @@ const MyList = (props) => {
             {props.listUsers.map((u) => {
                 return (
                     <>
-                        <UserTag bg={users[u].userColor}>{users[u].username}</UserTag>
+                        <UserTag bg={users[u] ? users[u]?.userColor : "black"}>{users[u] ? users[u]?.username : "deletedAccount"}</UserTag>
                          <br />
                     </>
                 )
@@ -146,7 +146,7 @@ const MyList = (props) => {
             {listInvitations?.map((u) => {
                 return (
                     <>
-                        <UserTag bg={users[u.toUser].userColor}>{users[u.toUser].username}</UserTag>
+                        <UserTag bg={users[u.toUser] ? users[u.toUser]?.userColor : "black"}>{users[u.toUser] ? users[u.toUser]?.username : "deletedAccount"}</UserTag>
                             <br />
                     </>
                 )
@@ -175,7 +175,9 @@ const MyList = (props) => {
                     {tasks?.map((task) => {
                         return (< MyListItem taskID={task?.id} listID={props.listID} text={task?.taskContent} />)
                     })}
-                    < MyAddListItem onClick={addItemToList} value={newItemContent} onChange={(e) => setNewItemContent(e.target.value)} />
+                    < MyAddListItem onKeyPress={(e) => {
+                        e.key === "Enter" && addItemToList();
+                    }} onClick={addItemToList} value={newItemContent} onChange={(e) => setNewItemContent(e.target.value)} />
                 </div>
             </>)}
         </div>
