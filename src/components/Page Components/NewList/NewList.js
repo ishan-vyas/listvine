@@ -187,7 +187,7 @@ function NewList() {
                 <div className="create-div">
                     <CreateNewList quicklist={false}/>
                 </div>
-                <ActionBar style={{ width: "15%", height: "50vh" }} />
+                <ActionBar style={{ width: "15%"}} />
             </div>
         </div>
     );

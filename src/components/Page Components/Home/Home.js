@@ -35,7 +35,7 @@ function Home(){
                     
                 </div>
 
-                <ActionBar style={{width:'15%', height: '50vh'}} />
+                <ActionBar style={{width:'15%'}} />
             </div>
         </div>
     );

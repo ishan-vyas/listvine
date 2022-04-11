@@ -37,4 +37,20 @@
     .actionbar-div{
         padding: 0;
     }
+
+      @media only screen and (max-height: 460px){
+    
+        .actionbar-div > div > a > svg {
+           font-size: 1.5rem;
+        }
+
+         .actionbar-div > div > svg {
+           font-size: 1.5rem;
+        }
+    
+    
+    
+    }
 }
+
+  

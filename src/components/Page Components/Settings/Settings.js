@@ -95,7 +95,7 @@ function Settings(){
                         <deletebutton style={{color:'red', fontFamily:'Roboto', fontSize:'large'}} onClick={() => setConfirmIsOpen(true)}><u>Delete Account</u></deletebutton>
                     </div>
                 </div>
-                <ActionBar style={{width:'15%', height:'50vh'}}/>
+                <ActionBar style={{width:'15%'}}/>
             </div>
         </div>
     );
