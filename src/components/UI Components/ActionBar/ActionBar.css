@@ -27,3 +27,27 @@
     text-justify: inter-character;
     text-align-last: justify;
 }
+
+@media only screen and (max-width: 800px) {
+    .actionbar-p{
+        display: none;
+    }
+
+    .actionbar-div{
+        padding: 0;
+    }
+
+      @media only screen and (max-height: 460px){
+    
+        .actionbar-div > div > a > svg {
+           font-size: 1.5rem;
+        }
+
+         .actionbar-div > div > svg {
+           font-size: 1.5rem;
+        }
+    
+    
+    
+    }
+}

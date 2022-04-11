@@ -216,4 +216,16 @@
     .listpost-actions > svg{
         font-size: x-large;
     } 
+
+
+  @media only screen and (max-width: 500px) {
+    .listpost-title{
+       font-size: 1.8em;
+    }
+
+    .listpost-actions > svg{
+       font-size: 1.5rem;
+    
+    
+    }
 }
