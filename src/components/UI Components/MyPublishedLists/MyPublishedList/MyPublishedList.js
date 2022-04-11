@@ -56,9 +56,12 @@ const MyPublishedList = (props) => {
     const [listOpen, setListOpen] = useState(false);
 
     const addComment = async () => {
+        console.log(commentContent);
+        console.log("commenting from published list");
         if(commentContent !== ""){
             await addDoc(collection(db, "Post", props.postID, "Comments"), {
                 commentContent: commentContent,
+                commentCreated: new Date(),
                 userID: user.uid
             });
         }
@@ -174,8 +177,8 @@ const MyPublishedList = (props) => {
                         })}
                         <div className="add-comment">
                             <h3 style={{marginBottom:'1%', fontFamily:'Roboto'}}>Add Comment</h3>
-                            <div className="comment-input">
-                                <TextInput value={commentContent} onChange={(e) => setCommentContent(e.target.value)} inputStyle={{margin:'0', width:'97%', backgroundColor:"white"}} style={{width:'100%', margin: "0", marginBottom:"0"}}/>
+                            <div className="publist-comment-input">
+                                <TextInput value={commentContent} onChange={(e) => setCommentContent(e.target.value)} inputStyle={{margin:'0', width:'97%', backgroundColor:"white", marginBottom:"1%"}} style={{width:'100%', margin: "0", marginBottom:"0"}}/>
                                 <Send onClick={addComment} style={{color:'#4285F4', marginLeft:'1%', fontSize:'xx-large'}}/>
                             </div>
                         </div>

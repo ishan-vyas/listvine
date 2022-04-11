@@ -139,6 +139,7 @@
     font-weight: 100;
     margin: 0;
     padding: 0;
+    word-wrap: break-word;
 }
 
 .check-container{
@@ -225,4 +226,24 @@
     
     
     }
+}
+
+p{
+    word-wrap: break-word;
+}
+
+h1{
+    word-wrap: break-word;
+}
+
+h2{
+    word-wrap: break-word;
+}
+
+h3{
+    word-wrap: break-word;
+}
+
+h4{
+    word-wrap: break-word;
 }
