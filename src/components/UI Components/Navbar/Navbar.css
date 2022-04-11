@@ -30,3 +30,11 @@
     font-family: 'Roboto', sans-serif;
     font-size: 150%;
 }
+
+@media only screen and (max-width: 456px) {
+    #navbar-user{
+        font-size: 110%;
+    
+    }
+
+}

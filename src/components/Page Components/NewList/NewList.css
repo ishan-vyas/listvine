@@ -27,6 +27,7 @@
     flex-direction: column;
     justify-content: center;
     overflow-y:scroll;
+    padding-right: 3px;
 }
 
 #newlist-title{
@@ -50,10 +51,6 @@
     
 }
 
-.listitem-section{
-
-    
-}
 
 .listitem-checkbox{
     margin-right:5%;
@@ -69,6 +66,7 @@
     margin-bottom: 0;
     text-align: center;
     cursor: pointer;
+    padding-bottom: 10px;
 }
 
 .user-section{
@@ -125,4 +123,19 @@
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
+}
+
+
+@media only screen and (max-width: 456px) {
+   .header-section, .list-section, .user-section{
+    font-size: 0.7em;
+   
+   }
+}
+
+@media only screen and (max-width: 315px) {
+   .header-section{
+    font-size: 0.6em;
+   
+   }
 }

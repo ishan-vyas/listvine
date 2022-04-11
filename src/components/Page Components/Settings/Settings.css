@@ -166,3 +166,16 @@
     flex-direction: column;
 
 }
+
+
+@media only screen and (max-width: 456px) {
+    
+   .username-section > p, .email-section > p, .password-section > p {
+    font-size: 0.9em;
+}
+    .edit-actions > svg{
+        width: 190%;
+        height: 190%;
+    }
+
+}

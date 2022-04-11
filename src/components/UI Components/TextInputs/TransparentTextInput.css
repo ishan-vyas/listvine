@@ -26,3 +26,10 @@
     border-color: #8C8C8C;
     transition: ease 0.3s;
 }
+
+@media only screen and (max-width: 445px) {
+   .transparent-input{
+    font-size: 1.2em;
+   
+   }
+}

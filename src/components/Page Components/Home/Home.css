@@ -29,3 +29,13 @@
 .info-div-child {
     margin-top: 0.5%;
 }
+
+
+
+@media only screen and (max-width: 385px) {
+    .info-div-child{
+        font-size: 0.7em;
+   
+
+    }
+}
