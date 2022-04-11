@@ -35,7 +35,11 @@
 @media only screen and (max-width: 385px) {
     .info-div-child{
         font-size: 0.7em;
-   
+    }  
+}
 
-    }
+@media only screen and (max-width: 900px) {
+    .info-div{
+        width: 95%;
+    } 
 }

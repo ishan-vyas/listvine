@@ -28,12 +28,14 @@
     padding: 0;
     font-family: 'Roboto', sans-serif;
     color: black;
+    font-size: x-large;
 }
 
 .modal-body > p{
     color: black;
     font-family: 'Roboto', sans-serif;
-    font-size: x-large;
+    font-size: large;
+    font-weight: 100;
     margin: 0;
     padding: 0;
 }
@@ -41,4 +43,14 @@
 .modal-footer{
     padding-top: 3%;
     text-align: center;
+}
+
+@media only screen and (max-width: 900px) {
+    .modal-title > h1{
+        font-size: medium;
+    }
+
+    .modal-body > p{
+        font-size: small;
+    }
 }

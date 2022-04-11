@@ -122,11 +122,18 @@
     }
 }
 
-/*@media only screen and (max-width: 800px) {
+@media (max-width: 900px) {
     .quicklist-div{
        display: none;
-       width: 0px;
-   
-
     }
-}*/
+
+    .livelist-div{
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .actionbar-div-page{
+        display: none;
+    }
+}

@@ -65,7 +65,9 @@ function Invitations(props){
                         })) : (<p>You have no invitation</p>)}
                     </div>
                 </div>
-                <ActionBar style={{width:'15%', height: '50vh'}} />
+                <div className="actionbar-div-page" style={{width:'15%'}}>
+                    <ActionBar  style={{width:'100%', height:'50vh'}}/>
+                </div>
             </div>
         </div>
     );
