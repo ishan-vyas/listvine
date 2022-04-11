@@ -94,10 +94,38 @@
 
 .accept-reject-section > p{
     margin:0;
-    padding: 0;
+    padding-right: 15px;
 }
 
 .view-list-button, .accept-button{
     text-decoration: underline;
+}
+
+@media only screen and (max-width: 980px) {
+    .accept-reject-section{
+       padding-right: 20px;
+    }
+    .list-info-section > h3 {
+    padding-right: 20px;
+}
+}
+
+@media only screen and (max-width: 430px) {
+    .accept-reject-section{
+       padding-right: 20px;
+    }
+
+    .list-info-section, .accept-reject-section{
+        font-size: 0.7em;
+    
+    }
+
+    .list-info-section > h3 {
+    padding-right: 15px;
+}
+    .listitem-container > div > p{
+        font-size: 0.9em;
+
+    }
 }
 

@@ -17,5 +17,6 @@ button{
     height: 5vh;
     text-align: center;
     margin-bottom: 5%;
-}
+    min-width: 100px;
+}   
 
