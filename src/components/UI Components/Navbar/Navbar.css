@@ -31,10 +31,61 @@
     font-size: 150%;
 }
 
+.create-div-shortcut{
+    position: absolute;
+    display: none;
+    top: 85%;
+    left: 80%;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: #4285F4;
+    border-radius: 100%;
+}
+
+.navbar-menu{
+    display: none;
+}
+
+.navbar-action-background {
+    z-index: 5;
+    display: none;
+    width: 100%;
+    background-color: rgba(200, 200, 200, 0.294);
+    position: absolute;
+    margin: 0 auto;
+}
+
+.navbar-action-menu{
+    height: 100vh;
+}
+
+
 @media only screen and (max-width: 456px) {
     #navbar-user{
         font-size: 110%;
-    
     }
+}
 
+@media only screen and (max-width: 900px) {
+    .navbar-menu{
+        display: flex;
+        align-items: center;
+    }
+    .navbar-action-background{
+        display: block;
+    }
+    .create-div-shortcut{
+        display: flex;
+    }
+    #navbar-logo{
+        font-size: x-large;
+    }
+    .main-navbar > svg{
+        font-size: x-large;
+    }
+    .navbar-menu > svg {
+        font-size: x-large;
+    }
 }

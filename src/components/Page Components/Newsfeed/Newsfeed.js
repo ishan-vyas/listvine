@@ -41,10 +41,12 @@ function Newsfeed(){
                 </div>
                 <div className="livelist-div">
                     {posts?.map((post) => {
-                        return (<ListPost creation={post?.postCreated.toDate().toString()} key={post?.id} userDetails={post?.userID} likeList={post?.userLikes} id={post?.id} listID={post?.list}/>)
+                        return (<ListPost creation={post?.postCreated.toDate().toLocaleString()} key={post?.id} userDetails={post?.userID} likeList={post?.userLikes} id={post?.id} listID={post?.list}/>)
                     })}
                 </div>
-                <ActionBar style={{width:'15%'}} />
+                <div className="actionbar-div-page" style={{width:'15%'}}>
+                    <ActionBar  style={{width:'100%', height:'50vh'}}/>
+                </div>
             </div>
         </div>
     );

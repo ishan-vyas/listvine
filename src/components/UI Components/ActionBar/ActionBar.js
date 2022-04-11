@@ -1,7 +1,7 @@
 import React from "react";
 import './ActionBar.css';
 import { Link, useNavigate } from "react-router-dom";
-import { HomeOutlined, ListAltOutlined, CreateOutlined, CardGiftcardOutlined, SettingsOutlined, ExitToAppOutlined } from '@material-ui/icons';
+import { HomeOutlined, ListAltOutlined, CreateOutlined, Close, CardGiftcardOutlined, SettingsOutlined, ExitToAppOutlined } from '@material-ui/icons';
 import { useAuth } from "../../../context/UserAuthContext";
 
 function ActionBar(props){
@@ -69,6 +69,16 @@ function ActionBar(props){
                 <ExitToAppOutlined fontSize="large"/>
                 <p className="actionbar-p">Log Out</p>
             </div>
+            {
+            props.closeMenu &&
+            <>
+                <div className="seperator"></div> 
+                <div className="close-action" onClick={props.closeActionBar}>
+                    <Close fontSize="large"/>
+                    <p className="actionbar-p">Close Menu</p>
+                </div>
+            </>
+            }
         </div>
     );
 }

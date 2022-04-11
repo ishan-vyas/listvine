@@ -28,7 +28,7 @@ function MyLists() {
         <div className='mylists-content'>
             <h1 className='mylists-title'>My Lists</h1>
             {myLists ? (myLists?.map((list) => {
-                return (< MyList creation={list?.listCreated.toDate().toString()} listUsers={list?.users} listID={list?.id} key={list?.id} title={list?.title}/>)
+                return (< MyList creation={list?.listCreated.toDate().toLocaleString()} listUsers={list?.users} listID={list?.id} key={list?.id} title={list?.title}/>)
             })) : (<p>You have no lists</p>)}
         </div>
     );

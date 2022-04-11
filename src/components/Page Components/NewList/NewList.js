@@ -43,6 +43,7 @@ export const CreateNewList = (props) => {
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.content,
                     taskStatus: false,
+                    taskCreated: new Date(),
                 });
             });
             inviteUsers();
@@ -182,12 +183,14 @@ function NewList() {
 
     return (
         <div className="main-newlist-div">
-            <Navbar>Ishan Vyas</Navbar>
+            <Navbar showCreate={true}>Ishan Vyas</Navbar>
             <div className="newlist-div">
                 <div className="create-div">
                     <CreateNewList quicklist={false}/>
                 </div>
-                <ActionBar style={{ width: "15%"}} />
+                <div className="actionbar-div-page" style={{width:'15%'}}>
+                    <ActionBar  style={{width:'100%', height:'50vh'}}/>
+                </div>
             </div>
         </div>
     );

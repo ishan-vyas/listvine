@@ -3,7 +3,7 @@ import './MyList.css';
 import MyListItem from './MyListItem/MyListItem';
 import MyAddListItem from './MyListItem/MyAddListItem';
 import { useState, useEffect } from 'react';
-import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc} from 'firebase/firestore';
+import {  onSnapshot, collection, doc, deleteDoc, query, where, getDocs, addDoc, orderBy} from 'firebase/firestore';
 import {db} from "../../../firebase"
 import Confirm from "../../Modals/Confirm";
 import MemberModal from '../../Modals/MemberModal';
@@ -35,7 +35,7 @@ const MyList = (props) => {
 
     useEffect(() => {
         getInvitations();
-        const taskCollectionRef = collection(db, "List", props.listID, "Tasks");
+        const taskCollectionRef = query(collection(db, "List", props.listID, "Tasks"), orderBy('taskCreated'));
         const unsubscribe = onSnapshot(taskCollectionRef, (querySnapshot) => {
             const tasksTemp = [];
             querySnapshot.forEach((doc) => {
@@ -81,7 +81,8 @@ const MyList = (props) => {
             tasks?.forEach((t) => {
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.taskContent,
-                    taskStatus: t.taskStatus
+                    taskStatus: t.taskStatus,
+                    taskCreated: t.taskCreated
                 })
             })
             addDoc(collection(db, "Post"), {
@@ -103,6 +104,7 @@ const MyList = (props) => {
             await addDoc(taskColRef, {
                 taskContent: newItemContent,
                 taskStatus: false,
+                taskCreated: new Date()
             })
             .then(() => {
                 setNewItemContent("");

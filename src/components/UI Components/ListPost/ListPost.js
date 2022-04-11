@@ -6,7 +6,7 @@ import TextInput from '../TextInputs/TextInput';
 import {db} from "../../firebase";
 import { getDoc, doc, collection, getDocs, onSnapshot, addDoc, setDoc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../../context/UserAuthContext";
-import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, Edit, Send} from '@material-ui/icons';
+import { Whatshot, WhatshotOutlined, Comment, CommentOutlined, FileCopyOutlined, Send} from '@material-ui/icons';
 import Confirm from "../Modals/Confirm";
 
 export const UserTag = (props) => {
@@ -71,7 +71,8 @@ const ListPost = (props) => {
             listTasks.forEach((t) => {
                 addDoc(collection(db, "List", docRef.id, "Tasks"), {
                     taskContent: t.taskContent,
-                    taskStatus: t.taskStatus
+                    taskStatus: t.taskStatus,
+                    taskCreated: t.taskCreated
                 })
             })
         });
@@ -158,7 +159,7 @@ const ListPost = (props) => {
                 </div>
                 <div className="userlist">
                     <h1 className="listpost-title">{list?.title}</h1>
-                    <p style={{color:"grey", fontFamily:"Roboto", fontWeight:"100", margin:"0", marginLeft:"1%"}}>Posted on: {props.creation}</p>
+                    <p style={{color:"grey", fontFamily:"Roboto", fontWeight:"100", margin:"0", marginLeft:"1%", fontSize:"medium"}}>Posted on: {props.creation}</p>
                     <div className="listitem-container">
                         {listTasks?.map((task) => {
                             return (<ListItem>{task.taskContent}</ListItem>);
@@ -169,7 +170,7 @@ const ListPost = (props) => {
             <div className="listpost-actions">
                 {like ? (<Whatshot style={{color:"orange"}} onClick={likeHandler} fontSize="large"/>) : (<WhatshotOutlined onClick={likeHandler} fontSize="large"/>)}
                 {comment ? (<Comment style={{color:"#4285F4"}} onClick={() => setComment(!comment)} fontSize="large"/>) : (<CommentOutlined onClick={() => setComment(!comment)} fontSize="large"/>)}
-                <Edit fontSize="large" onClick={() => setConfirm(true)}/>
+                <FileCopyOutlined fontSize="large" onClick={() => setConfirm(true)}/>
             </div>
             <div className="break"></div>
             <div className='listpost-seperator'></div>

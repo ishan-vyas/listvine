@@ -121,11 +121,21 @@
     }
 
     .list-info-section > h3 {
-    padding-right: 15px;
-}
+        padding-right: 15px;
+    }
     .listitem-container > div > p{
         font-size: 0.9em;
 
+    }
+}
+
+@media (max-width: 900px) {
+    .friends-div{
+       width: 95%;
+    }
+
+    .list-info-section{
+        width: 100%;
     }
 }
 

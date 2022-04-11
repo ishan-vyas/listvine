@@ -29,7 +29,7 @@ function MyPublishedLists() {
 
             {
                 myPosts ? (myPosts?.map((post) => {
-                    return (< MyPublishedList likeList={post?.userLikes} creation={post?.postCreated.toDate().toString()} key={post?.id} postID={post?.id} listID={post?.list} />)
+                    return (< MyPublishedList likeList={post?.userLikes} creation={post?.postCreated.toDate().toLocaleString()} key={post?.id} postID={post?.id} listID={post?.list} />)
                 }))
                 : (<p>You have no published lists</p>)
             }

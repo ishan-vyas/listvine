@@ -28,11 +28,7 @@
     text-align-last: justify;
 }
 
-
 @media only screen and (max-width: 800px) {
-    .actionbar-p{
-        display: none;
-    }
 
     .actionbar-div{
         padding: 0;
@@ -53,4 +49,3 @@
     }
 }
 
-  
