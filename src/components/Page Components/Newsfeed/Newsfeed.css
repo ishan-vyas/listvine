@@ -114,19 +114,17 @@
     transition: ease 0.3s;
 }
 
-@media only screen and (max-width: 570px) {
-    .listpost-title{
-       font-size: 1.8em;
-   
 
-    }
-}
 
-/*@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 800px) {
     .quicklist-div{
        display: none;
        width: 0px;
    
 
     }
-}*/
+    .livelist-div{
+    width: 90%;
+    
+}
+}
