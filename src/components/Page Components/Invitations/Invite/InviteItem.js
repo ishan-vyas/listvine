@@ -72,8 +72,8 @@ const InviteItem = (props) => {
                 <UserTag bg={users[props.fromUser]?.userColor}>{users[props.fromUser]?.username}</UserTag>
 
                 <div className="list-info-section">
-                    <h3 style={{color:"black", fontFamily:"Roboto", margin:"0", marginRight:"1%"}} className="list-title">{invitaionList?.title}</h3>
                     <p onClick={() => setView(!view)}><u>View</u></p>
+                    <h3 style={{color:"black", fontFamily:"Roboto", margin:"0", marginRight:"1%"}} className="list-title">{invitaionList?.title}</h3>
                 </div>
                 {view && <div className="listitem-container">
                         {tasks?.map((task) => {
