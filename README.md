@@ -20,7 +20,7 @@ Before running the app ensure that you have node installed globally on your comp
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-6) (Optional) (Currently in progress not yet working) To run the app online follow this link:
+6) (Optional) To run the app online follow this link:
 https://listvine-4fba0.web.app/
 
 
